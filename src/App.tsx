@@ -8,11 +8,13 @@ import { CodePage } from "./pages/CodePage"
 import { ManageCodes } from "./pages/ManageCodes"
 import { ManageCategories } from "./pages/ManageCategories"
 import { AdminLayout } from "./components/layout/adminLayout.tsx/AdminLayout"
+import ScrollToTop from "./components/common/ScrollRestoration"
 
 function App() {
 
   return (
     <HashRouter>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Home />} />

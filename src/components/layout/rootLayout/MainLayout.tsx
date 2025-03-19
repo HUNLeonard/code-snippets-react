@@ -1,5 +1,5 @@
 import Header from './Header'
-import Footer from './Footer'
+// import Footer from './Footer'
 import { Outlet } from 'react-router-dom'
 
 export default function MainLayout() {
@@ -9,7 +9,7 @@ export default function MainLayout() {
       <div className='relative max-w-8xl mx-auto min-h-screen '>
         <Outlet />
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </>
   )
 }
