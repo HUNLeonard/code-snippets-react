@@ -15,10 +15,11 @@ const CategoryCard = ({ category }: { category: TCategory }) => {
         <img
           src={cardImageSrc}
           alt="Shoes"
-          className="group-hover:blur-[2px] group-hover:scale-105 transition-all duration-600 ease-out"
+          className="md:group-hover:blur-[2px] group-hover:scale-105 transition-all duration-600 ease-out"
         />
       </figure>
-      <div className={cn("card-body inset-x-0 absolute bottom-0 rounded-b-md",
+      <div className={cn("max-md:hidden",
+        "card-body inset-x-0 absolute bottom-0 rounded-b-md",
         "-translate-y-full group-hover:translate-y-0",
         "opacity-0 group-hover:opacity-100",
         "blur group-hover:blur-none",

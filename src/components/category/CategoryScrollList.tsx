@@ -1,47 +1,50 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { TCategory } from "../../types/Category";
 import CategoryCard from "./CategoryCard";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ScrollButton } from "../common/ScrollButton";
+import { cn } from "../../utils/cn";
 
-export const CategoryScrollList = ({ categories }: { categories: TCategory[] }) => {
-  const [scrollAmount, setScrollAmount] = useState(0);
+export const CategoryScrollList = ({
+  categories,
+}: {
+  categories: TCategory[];
+}) => {
   const categoryContainer = useRef<HTMLDivElement | null>(null);
 
   const scrollHorizintal = (direction: "left" | "right") => {
-    const calcScroll = 0;
-    setScrollAmount(p => p + (direction === "left" ? calcScroll : -calcScroll))
-  }
-
-  useEffect(() => {
     if (!categoryContainer.current) return;
-    const controller = new AbortController();
-    let containerLength = categoryContainer.current?.scrollWidth || 0;
+    // const containerLength = categoryContainer.current?.scrollWidth || 0;
+    categoryContainer.current.scrollLeft += direction === "left" ? -360 : 360
 
-    const reCalculateContainerLength = () => {
-      containerLength = categoryContainer.current?.scrollWidth || 0;
-    }
-
-    const scroller = () => {
-      setScrollAmount(p => containerLength / 2 > -p ? p - 0.25 : 0)
-    }
-
-    setInterval(() => {
-      scroller()
-    }, 10, { signal: controller.signal })
-
-    window.addEventListener('resize', reCalculateContainerLength, { signal: controller.signal })
-
-    return () => { controller.abort() }
-  }, [categoryContainer, setScrollAmount])
+    return;
+  };
 
   return (
-    <div
-      ref={categoryContainer}
-      className="flex h-40 *:max-w-64 *:shrink-0 gap-4"
-      style={{ translate: scrollAmount + "px" }}
-    >
-      {categories.map((c, index) => (
-        <CategoryCard key={c.id + "-" + index} category={c} />
-      ))}
-    </div>
+    <>
+      <ScrollButton
+        icon={ChevronLeft}
+        execute={() => scrollHorizintal("left")}
+        className="left-0 top-1/2 -translate-y-1/2 max-sm:bg-primary/20"
+      />
+      <div
+        ref={categoryContainer}
+        className={cn("flex h-20 md:h-40",
+          "max-md:[&_figure,&_img]:h-full max-md:[&_img]:object-cover",
+          "max-md:*:h-20 *:max-w-20 md:*:max-w-64 *:shrink-0",
+          "gap-4 overflow-x-auto no-scrollbar scroll-smooth ",
+          "max-md:*:!rounded-full max-md:*:overflow-hidden ",
+          "items-center sm:mx-8")}
+      >
+        {categories.map((c, index) => (
+          <CategoryCard key={c.id + "-" + index} category={c} />
+        ))}
+      </div>
+      <ScrollButton
+        icon={ChevronRight}
+        execute={() => scrollHorizintal("right")}
+        className="right-0 top-1/2 -translate-y-1/2 max-sm:bg-primary/20"
+      />
+    </>
   );
 };
