@@ -1,0 +1,55 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+:root{
+  --header-height: 4rem;
+}
+
+@theme {
+  --breakpoint-*: initial;
+  --breakpoint-xxs: 26rem; /* 368px */
+  --breakpoint-xs: 30rem; /* 480px */
+  --breakpoint-sm: 40rem; /* 640px */
+  --breakpoint-md: 48rem; /* 768px */
+  --breakpoint-lg: 64rem; /* 1 024px */
+  --breakpoint-xl: 80rem; /* 1 280px */
+  --breakpoint-2xl: 90rem; /* 1 440px */
+  --breakpoint-3xl: 120rem;
+  --breakpoint-4xl: 135rem;
+
+  --container-8xl: 90rem;
+  --font-rubik: 'Rubik';
+}
+
+@font-face {
+  font-family: 'Rubik';
+  font-style: normal;
+  font-weight: 300 900;
+  font-display: swap;
+  src: url("/fonts/Rubik/Rubik-VariableFont_wght.ttf") format('woff2');
+}
+
+
+@font-face {
+  font-family: 'Rubik';
+  font-style: italic;
+  font-weight: 300 900;
+  font-display: swap;
+  src: url("/fonts/Rubik/Rubik-Italic-VariableFont_wght.ttf") format('woff2');
+}
+
+.animation-loadingText{
+  animation: loadingText infinite ease-in-out;
+}
+
+@keyframes loadingText {
+  0%{
+    transform: translateY(0%) scaleY(100%);
+  }
+  30%{
+    transform: translateY(-10%) scaleY(110%);
+  }
+  60%,100%{
+    transform: translateY(0%) scaleY(100%);
+  }
+}
