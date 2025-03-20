@@ -5,6 +5,10 @@
   --header-height: 4rem;
 }
 
+button,a{
+  cursor: pointer;
+}
+
 @theme {
   --breakpoint-*: initial;
   --breakpoint-xxs: 26rem; /* 368px */
@@ -61,5 +65,18 @@ scrollbar-width: none;  /* Firefox */
   }
   60%,100%{
     transform: translateY(0%) scaleY(100%);
+  }
+}
+
+.animation-floatUp{
+  animation: floatUp forwards ease-in-out; 
+}
+
+@keyframes floatUp {
+  0%{
+    transform: translateY(50%);
+    opacity: 0;
+  }100%{
+    opacity: 1;
   }
 }

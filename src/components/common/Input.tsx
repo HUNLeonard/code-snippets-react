@@ -14,6 +14,10 @@ interface InputProps {
   label?: string;
   name?: string;
   type?: "text";
+  className?: string;
+  wrapperClassName?: string;
+  labelClassName?: string;
+  inputClassName?: string;
 }
 
 export const Input = ({
@@ -25,12 +29,15 @@ export const Input = ({
   name,
   type = "text",
   input,
+  wrapperClassName,
+  labelClassName,
+  inputClassName
 }: InputProps) => {
   const InputType = input || "input";
 
   return (
-    <div>
-      <label htmlFor={name} className="flex flex-col">
+    <div className={wrapperClassName}>
+      <label htmlFor={name} className={cn("flex flex-col", labelClassName)}>
         <LabelText text={label.length !== 0 ? label : name} />
         <InputType
           type={type}
@@ -41,7 +48,7 @@ export const Input = ({
           onChange={onChange}
           className={cn("text-lg sm:text-xl bg-base-content/80 text-black rounded-md px-3 py-2",
             "border-2 border-black focus:ring-2 focus:ring-offset-2 ring-primary focus:border-transparent",
-            "outline-0 shadow-sm",
+            "outline-0 shadow-sm", inputClassName,
             input === "textarea" && "min-h-36 "
           )}
         />

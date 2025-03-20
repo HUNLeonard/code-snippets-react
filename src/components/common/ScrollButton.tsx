@@ -11,7 +11,7 @@ export const ScrollButton = ({ icon: Icon, className, execute }: ScrollButtonPro
   return (
     <button onClick={execute}
       className={cn("absolute z-30",
-        "bg-primary rounded-md cursor-pointer p-1 ",
+        "bg-primary rounded-md p-1 ",
         "hover:brightness-95 active:brightness-75 transition-all",
         "duration-200",
         className

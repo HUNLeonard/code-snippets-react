@@ -27,23 +27,23 @@ export const AdminHeader = () => {
 
   return (
     <div
-      className={cn("fixed top-[var(--header-height)] h-16 inset-x-0",
+      className={cn("fixed top-[var(--header-height)] py-4 inset-x-0",
         "rounded-bl-md border-t border-base-100/40 shadow z-40",
         "flex items-center transition-all duration-300 bg-base-200/96",
         "max-w-8xl mx-auto backdrop-blur-xs",
         !isOpen && "-translate-y-full bg-transparent shadow-none"
       )}>
-      <nav className={`flex ${!isOpen && "opacity-0"} mx-4 transition-all duration-300 gap-4`}>
+      <nav className={`flex ${!isOpen && "opacity-0"} mx-4 transition-all duration-300 gap-4 flex-wrap`}>
         {
           navLinks.map(link =>
-            <NavButton to={link.to} name={link.name} key={link.name} />
+            <NavButton to={link.to} name={link.name} key={link.name} execute={() => setIsOpen(p => !p)} />
           )
         }
       </nav>
       <button
         onClick={() => setIsOpen(p => !p)}
         className={cn("absolute right-0 bottom-0 translate-y-full ",
-          "bg-primary text-primary-content cursor-pointer",
+          "bg-primary text-primary-content",
           "rounded-b-md")}>
         {
           isOpen

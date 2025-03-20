@@ -9,7 +9,7 @@ export const CategoryShowCase = () => {
 
   return (
 
-    <section className="space-y-6 my-6 mx-2">
+    <section className="space-y-6 mx-2">
       <H2>Categories</H2>
       <div className="relative mx-auto sm:px-4">
         <div className="max-md:hidden md:absolute left-0 inset-y-0 w-14 bg-gradient-to-r from-base-100 from-80% to-transparent z-10" />

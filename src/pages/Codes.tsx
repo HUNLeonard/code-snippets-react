@@ -1,27 +1,48 @@
-import { useSearchParams } from "react-router-dom"
-import { H2 } from "../components/common/H2"
+import { useSearchParams } from "react-router-dom";
+import { H2 } from "../components/common/H2";
+import { CodeLister } from "../components/code/CodeLister";
+import { useCodeStore } from "../stores/code.store";
+import { FilterSection } from "../components/code/FilterSection";
+import { useMemo } from "react";
 
-export const Codes = () => {
+const Codes = () => {
+  const allCodes = useCodeStore((store) => store.codes);
   const [searchParams, setSearchParams] = useSearchParams();
-  const catParam = searchParams.get("categories") || "";
-  const categories = catParam.split(",")
 
-  const handleSearchParams = () => {
-    setSearchParams(params => {
-      params.set("categories", (catParam + ",apple"));
-      return params;
+  const q = searchParams.get("q") || "";
+  const categoryIds = useMemo(() => {
+    return searchParams.get("categories")?.split(" ").filter(Boolean) || [];
+  }, [searchParams]);
+
+  const filteredCodes = useMemo(() => {
+    return allCodes.filter((code) => {
+      // Filter by search query
+      const matchesQuery = q
+        ? code.name.toLowerCase().includes(q.toLowerCase()) ||
+        code.desc.toLowerCase().includes(q.toLowerCase()) ||
+        code.code.toLowerCase().includes(q.toLowerCase())
+        : true;
+
+      // Filter by categories
+      const matchesCategories =
+        categoryIds.length > 0
+          ? categoryIds.some((catId) => code.categories.includes(catId))
+          : true;
+
+      return matchesQuery && matchesCategories;
     });
-  }
+  }, [allCodes, q, categoryIds]);
 
   return (
-    <main className="my-6">
-      <H2>Codes {!!catParam.length && `- ${catParam}`}</H2>
-      {
-        categories.map((c, idx) =>
-          <p key={idx}>{c}</p>
-        )
-      }
-      <button onClick={handleSearchParams}>Add apple</button>
+    <main className="mx-2">
+      <H2>Codes</H2>
+      <FilterSection
+        searchParams={searchParams}
+        setSearchParams={setSearchParams}
+      />
+      <CodeLister codes={filteredCodes} />
     </main>
-  )
-}
+  );
+};
+
+export default Codes;

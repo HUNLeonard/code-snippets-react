@@ -1,4 +1,5 @@
-const animationLength = 3000; //ms
+import { loadingTextAnimationLength } from "../../shared/const";
+
 const loadingText = "Loading...";
 const loadingLength = loadingText.length;
 
@@ -10,8 +11,8 @@ export const LoadingText = () => {
           key={char + "-" + index}
           className="inline-block animation-loadingText"
           style={{
-            animationDuration: animationLength + "ms",
-            animationDelay: (index * animationLength) / loadingLength + "ms",
+            animationDuration: loadingTextAnimationLength + "ms",
+            animationDelay: (index * loadingTextAnimationLength) / loadingLength + "ms",
           }}
         >
           {char}

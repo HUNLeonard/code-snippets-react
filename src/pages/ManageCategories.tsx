@@ -1,9 +1,11 @@
 import { H2 } from '../components/common/H2'
 
-export const ManageCategories = () => {
+const ManageCategories = () => {
   return (
-    <main className="my-6">
+    <main className="mx-2">
       <H2>Category Manager</H2>
     </main>
   )
 }
+
+export default ManageCategories;

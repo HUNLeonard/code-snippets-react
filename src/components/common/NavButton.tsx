@@ -4,12 +4,14 @@ import { cn } from '../../utils/cn'
 
 interface NabButtonProps {
   to: string,
-  name: string
+  name: string,
+  execute: () => void;
 }
 
-export const NavButton = ({ to, name }: NabButtonProps) => {
+export const NavButton = ({ to, name, execute }: NabButtonProps) => {
   return (
     <NavLink end to={to}
+      onClick={execute}
       className={cn("px-4 py-1 font-medium rounded-md text-primary-content",
         "bg-primary hover:brightness-75 transition-all duration-200 shadow-md",
         "hover:-translate-y-0.25 inline-block",

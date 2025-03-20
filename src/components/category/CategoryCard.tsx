@@ -10,7 +10,7 @@ const CategoryCard = ({ category }: { category: TCategory }) => {
     `https://placehold.co/600x400/221144/a3bbff/?text=${capitalizer(category.name).replace(" ", "%20")}`;
 
   return (
-    <Link to={`/codes?categories=${category.slug}`} className="card bg-base-100 shadow-sm group cursor-pointer">
+    <Link to={`/codes?categories=${category.slug}`} className="card bg-base-100 shadow-sm group">
       <figure className="rounded-md overflow-hidden">
         <img
           src={cardImageSrc}

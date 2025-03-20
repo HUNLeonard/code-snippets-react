@@ -2,9 +2,14 @@ import { create } from "zustand";
 import { TCategory } from "../types/Category";
 import { persist } from "zustand/middleware";
 
+interface addCategory {
+  newName: string;
+  newImage: string;
+}
+
 interface CategoryStore {
   categories: TCategory[];
-  addCategory: (newName: string, newImage: string) => void;
+  addCategory: ({ newName, newImage }: addCategory) => void;
   updateCategory: (uCategory: TCategory) => void;
   removeCategory: (catId: TCategory["id"]) => void;
 }
@@ -19,12 +24,12 @@ export const useCategoryStore = create<CategoryStore>()(
         { id: "15", name: "stack", slug: "stack", image: "" },
         { id: "16", name: "common", slug: "common", image: "" },
       ],
-      addCategory: (name, image) => {
+      addCategory: ({ newName, newImage }) => {
         const newCategory: TCategory = {
           id: crypto.randomUUID(),
-          name,
-          slug: name.toLowerCase().replace(" ", ""),
-          image,
+          name: newName,
+          slug: newName.toLowerCase().replace(/[^a-zA-Z0-9]/g, ""),
+          image: newImage,
         };
         return set((store) => ({
           categories: [...store.categories, newCategory],
