@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { TCategory } from "../../types/Category";
-import CategoryCard from "./CategoryCard";
+import CategoryCard from "./CategoryShowcaseCard";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { ScrollButton } from "../common/ScrollButton";
 import { cn } from "../../utils/cn";

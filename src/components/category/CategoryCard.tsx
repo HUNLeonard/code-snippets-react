@@ -1,34 +1,45 @@
-import { Link } from "react-router-dom";
+import { CSSProperties } from "react";
+import { H3 } from "../common/H3";
+import { Edit } from "lucide-react";
 import { TCategory } from "../../types/Category";
 import { capitalizer } from "../../utils/capitalize";
+import { Card } from "../common/Card";
+import CardImage from "../common/CardImage";
 import { cn } from "../../utils/cn";
-import React from "react";
+import { usePopupStore } from "../../stores/popup.store";
 
-const CategoryCard = ({ category }: { category: TCategory }) => {
-  const cardImageSrc =
-    category.image ||
-    `https://placehold.co/600x400/221144/a3bbff/?text=${capitalizer(category.name).replace(" ", "%20")}`;
+interface CategoryCardProps {
+  category: TCategory;
+  manager?: boolean;
+  style?: CSSProperties
+  className?: string
+}
+
+const CategoryCard = ({ category, manager = false, style = {}, className }: CategoryCardProps) => {
+  const setEditingValues = usePopupStore(store => store.setEditingValues)
+  const openPopup = usePopupStore(store => store.openPopup)
+
+  const handleEdit = () => {
+    setEditingValues(category)
+    openPopup()
+  }
 
   return (
-    <Link to={`/codes?categories=${category.slug}`} className="card bg-base-100 shadow-sm group">
-      <figure className="rounded-md overflow-hidden">
-        <img
-          src={cardImageSrc}
-          alt="Shoes"
-          className="md:group-hover:blur-[2px] group-hover:scale-105 transition-all duration-600 ease-out"
-        />
-      </figure>
-      <div className={cn("max-md:hidden",
-        "card-body inset-x-0 absolute bottom-0 rounded-b-md",
-        "-translate-y-full group-hover:translate-y-0",
-        "opacity-0 group-hover:opacity-100",
-        "blur group-hover:blur-none",
-        "bg-base-200/40 backdrop-blur-xs",
-        "transition-[translate,opacity,filter] duration-600 ease-in-out")}>
-        <h2 className="text-xl font-semibold">{capitalizer(category.name)}</h2>
-      </div>
-    </Link>
-  );
-};
+    <Card
+      Tag="article"
+      style={style}
+      className={cn("group", className)}>
+      <CardImage src={category.image} name={category.name} />
+      <H3 className="text-center">
+        {capitalizer(category.name)}
+      </H3>
+      {manager && (
+        <button className="absolute top-3 sm:top-5 right-3 sm:right-5 w-fit" onClick={handleEdit}>
+          <Edit size={32} />
+        </button>
+      )}
+    </Card>
+  )
+}
 
-export default React.memo(CategoryCard);
+export default CategoryCard

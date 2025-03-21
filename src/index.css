@@ -80,3 +80,46 @@ scrollbar-width: none;  /* Firefox */
     opacity: 1;
   }
 }
+
+
+.animation-bgFadeIn{
+  animation: bgFadeIn forwards ease-in-out; 
+}
+
+@keyframes bgFadeIn {
+  0%{
+    background-color: rgba(0,0,0,0);
+    backdrop-filter: blur(0px);
+  }100%{
+    background-color: rgba(0,0,0,0.8);
+    backdrop-filter: blur(4px);
+  }
+}
+
+.animation-bgFadeOut{
+  animation: bgFadeOut forwards ease-in-out; 
+}
+
+@keyframes bgFadeOut {
+  0%{
+    background-color: rgba(0,0,0,0.8);
+    backdrop-filter: blur(4px);
+  }100%{
+    background-color: rgba(0,0,0,0);
+    backdrop-filter: blur(0px);
+  }
+}
+
+.animation-floatBeyond{
+  animation: floatBeyond forwards ease-in-out; 
+}
+
+@keyframes floatBeyond {
+  0%{
+    transform: translateY(0%);
+    opacity: 1;
+  }100%{
+    transform: translateY(-50%);
+    opacity: 0;
+  }
+}

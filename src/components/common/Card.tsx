@@ -1,22 +1,29 @@
-import React from 'react'
+import React, { CSSProperties } from "react";
+import { cn } from "../../utils/cn";
 
 interface CardProps {
-  bg?: string,
-  text?: string,
-  Tag: "article" | "button" | "div"
-  children?: Readonly<React.ReactNode>
+  Tag: "article" | "button" | "div";
+  style?: CSSProperties;
+  className?: string;
+  children?: Readonly<React.ReactNode>;
 }
 
-export const Card = ({ bg, text, Tag = "div", children }: CardProps) => {
+export const Card = ({
+  style = {},
+  className,
+  Tag = "div",
+  children,
+}: CardProps) => {
   return (
     <Tag
-      className='rounded-xl overflow-hidden border border-black/20 shadow-md flex flex-col'
-      style={{
-        backgroundColor: bg,
-        color: text
-      }}
+      className={cn(
+        "relative bg-base-300 p-3 sm:p-4",
+        "flex flex-col rounded-lg gap-4 h-fit",
+        className,
+      )}
+      style={style}
     >
       {children}
     </Tag>
-  )
-}
+  );
+};

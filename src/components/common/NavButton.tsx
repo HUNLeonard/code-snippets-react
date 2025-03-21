@@ -5,7 +5,7 @@ import { cn } from '../../utils/cn'
 interface NabButtonProps {
   to: string,
   name: string,
-  execute: () => void;
+  execute?: () => void;
 }
 
 export const NavButton = ({ to, name, execute }: NabButtonProps) => {
