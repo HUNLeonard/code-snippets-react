@@ -16,7 +16,7 @@ const EditFormButtons = ({ isLoading, isDeleting, resetPopup, handleDelete }: Ed
     <div className="flex flex-wrap justify-between gap-2">
       <Button
         type="submit"
-        className="flex items-center h-fit gap-2 !px-4 flex-1 whitespace-nowrap justify-center"
+        className="flex items-center h-fit gap-2 whitespace-nowrap justify-center"
         disabled={isLoading}
       >
         <SaveIcon />
@@ -28,7 +28,8 @@ const EditFormButtons = ({ isLoading, isDeleting, resetPopup, handleDelete }: Ed
           isDeleting
             ? "!bg-error !text-error-content"
             : "!bg-warning text-warning-content",
-          "flex items-center h-fit gap-2 !px-4 flex-1 whitespace-nowrap justify-center",
+          "flex items-center h-fit gap-2 !px-4 ",
+          "whitespace-nowrap justify-center",
         )}
         disabled={isLoading}
       >
@@ -43,7 +44,7 @@ const EditFormButtons = ({ isLoading, isDeleting, resetPopup, handleDelete }: Ed
       </Button>
       <Button
         execute={resetPopup}
-        className="!bg-base-content/70 !text-base-100 flex-1 whitespace-nowrap "
+        className="!bg-base-content/70 !text-base-100 whitespace-nowrap "
         disabled={isLoading}
       >
         Cancel

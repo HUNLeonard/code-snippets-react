@@ -9,7 +9,7 @@ const CategoryShowcaseCard = ({ category }: { category: TCategory }) => {
   return (
     <Link
       to={`/codes?categories=${category.id}`}
-      className="card bg-base-100 shadow-sm group"
+      className="card bg-base-100 shadow-sm group h-full"
     >
       <CardImage src={category.image} name={category.name} />
       <div

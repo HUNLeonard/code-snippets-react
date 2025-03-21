@@ -2,6 +2,7 @@ import React from "react";
 import { cn } from "../../utils/cn";
 import { LabelText } from "./LabelText";
 import { FormError } from "./FormError";
+import { LucideIcon } from "lucide-react";
 
 interface InputProps {
   value: string;
@@ -18,6 +19,7 @@ interface InputProps {
   wrapperClassName?: string;
   labelClassName?: string;
   inputClassName?: string;
+  icon?: LucideIcon;
 }
 
 export const Input = ({
@@ -31,14 +33,18 @@ export const Input = ({
   input,
   wrapperClassName,
   labelClassName,
-  inputClassName
+  inputClassName,
+  icon: Icon
 }: InputProps) => {
   const InputType = input || "input";
 
   return (
     <div className={wrapperClassName}>
       <label htmlFor={name} className={cn("flex flex-col", labelClassName)}>
-        <LabelText text={label.length !== 0 ? label : name} />
+        <div className="flex items-center justi gap-2">
+          {Icon && <Icon size={20} className="text-primary mb-1.5" />}
+          <LabelText text={label.length !== 0 ? label : name} />
+        </div>
         <InputType
           type={type}
           name={name}

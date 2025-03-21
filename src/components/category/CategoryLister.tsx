@@ -10,7 +10,7 @@ export const CategoryLister = ({
   manager?: boolean;
 }) => {
   return (
-    <section className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 gap-4">
+    <section className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 gap-4 ">
       {categories.map((cat, index) => (
         <CategoryCard
           key={cat.id}
@@ -21,7 +21,7 @@ export const CategoryLister = ({
             animationDelay:
               (index * codeCardAnimDuration) / categories.length + "ms",
           }}
-          className="animation-floatUp opacity-0"
+          className="animation-floatUp opacity-0 [&_img]:!blur-none"
 
         />
       ))}

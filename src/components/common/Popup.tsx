@@ -11,6 +11,8 @@ import { TCategory } from "../../types/Category";
 import CategoryEditForm from "../category/CategoryEditForm";
 import { TCode } from "../../types/Code";
 import CodeEditForm from "../code/CodeEditForm";
+import { useModalStore } from "../../stores/modal.store";
+import { capitalizer } from "../../utils/capitalize";
 
 
 const Popup = () => {
@@ -22,6 +24,10 @@ const Popup = () => {
   const setEditingvalues = usePopupStore((store) => store.setEditingValues);
   const closePopup = usePopupStore((store) => store.closePopup);
   const setIsClosing = usePopupStore((store) => store.setIsCloseing);
+
+  const openModal = useModalStore(store => store.openModal)
+  const setType = useModalStore(store => store.setType)
+  const setText = useModalStore(store => store.setText)
 
   const updateCategory = useCategoryStore((store) => store.updateCategory);
   const updateCode = useCodeStore((store) => store.updateCode);
@@ -57,6 +63,9 @@ const Popup = () => {
     }
 
     resetPopup();
+    openModal();
+    setType("success");
+    setText(capitalizer(type) + " Added Successfully!");
   };
 
   const handleDelete = () => {
@@ -69,6 +78,9 @@ const Popup = () => {
     else removeCategory(editingvalues.id);
 
     resetPopup();
+    openModal();
+    setType("success");
+    setText(capitalizer(type) + " Deleted Successfully!");
   };
 
   const resetPopup = () => {
@@ -94,15 +106,15 @@ const Popup = () => {
       className={cn(
         "fixed inset-0 w-full h-full z-50",
         "flex justify-center items-center animation-bgFadeIn",
-        isClosing && "animation-bgFadeOut",
+        isClosing && "animation-bgFadeOut"
       )}
       style={{ animationDuration: `${popupAnimDuration}ms` }}
     >
       <div
         className={cn(
-          "bg-base-300 p-4 rounded-lg",
+          "bg-base-300 p-6 rounded-lg overflow-y-auto",
           "animation-floatUp max-w-lg w-full text-bg-content",
-          "flex flex-col justify-between gap-4",
+          "flex flex-col justify-between gap-4 max-h-screen",
           isClosing && "animation-floatBeyond",
         )}
         style={{ animationDuration: `${popupAnimDuration}ms` }}

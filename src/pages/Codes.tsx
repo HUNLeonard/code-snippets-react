@@ -16,14 +16,14 @@ const Codes = () => {
 
   const filteredCodes = useMemo(() => {
     return allCodes.filter((code) => {
-      // Filter by search query
+
       const matchesQuery = q
         ? code.name.toLowerCase().includes(q.toLowerCase()) ||
         code.desc.toLowerCase().includes(q.toLowerCase()) ||
         code.code.toLowerCase().includes(q.toLowerCase())
         : true;
 
-      // Filter by categories
+
       const matchesCategories =
         categoryIds.length > 0
           ? categoryIds.some((catId) => code.categories.includes(catId))

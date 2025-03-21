@@ -17,7 +17,7 @@ export default function Header() {
       "shadow print:hidden")}>
       <div className="max-w-8xl mx-auto w-full flex justify-between items-center px-2">
         <Link to={"/"} className="text-4xl font-bold w-fit">
-          R<span className="text-primary">CS</span>
+          <span className="text-primary">CS</span>M
         </Link>
         <nav>
           {

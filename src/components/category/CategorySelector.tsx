@@ -4,6 +4,7 @@ import { TCategory } from "../../types/Category";
 import { cn } from "../../utils/cn";
 import { LabelText } from "../common/LabelText";
 import { FormError } from "../common/FormError";
+import { LucideIcon } from "lucide-react";
 
 interface CategorySelectorProps {
   options: TCategory[];
@@ -11,10 +12,12 @@ interface CategorySelectorProps {
   value?: TCategory["id"][];
   error?: string;
   name?: string;
+  label?: string;
   wrapperClassName?: string;
   labelClassName?: string;
   listClassName?: string;
   buttonClassName?: string;
+  icon?: LucideIcon;
 }
 
 const CategorySelector = ({
@@ -23,20 +26,19 @@ const CategorySelector = ({
   value = [],
   error,
   name,
+  label = "",
   wrapperClassName,
   labelClassName,
   listClassName,
   buttonClassName,
+  icon: Icon
 }: CategorySelectorProps) => {
   const toggleSelectedCategory = useCallback((categoryId: TCategory["id"]) => {
     if (!onChange) return;
 
-    // Check if the category is already selected
     if (value.includes(categoryId)) {
-      // Remove it from the array
       onChange(value.filter(id => id !== categoryId));
     } else {
-      // Add it to the array
       onChange([...value, categoryId]);
     }
   }, [onChange, value]);
@@ -44,7 +46,10 @@ const CategorySelector = ({
   return (
     <div className={wrapperClassName}>
       <label htmlFor={name} className={labelClassName}>
-        <LabelText text={name} />
+        <div className="flex items-center gap-2 mb-1.5">
+          {Icon && <Icon size={20} className="text-primary" />}
+          <LabelText text={label.length !== 0 ? label : name} />
+        </div>
         <div className={cn("flex flex-wrap gap-2", listClassName)}>
           {options.map((o, idx) => (
             <button

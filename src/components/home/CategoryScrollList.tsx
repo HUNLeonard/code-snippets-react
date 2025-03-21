@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { TCategory } from "../../types/Category";
-import CategoryCard from "./CategoryShowcaseCard";
+import CategoryShowcaseCard from "./CategoryShowcaseCard";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { ScrollButton } from "../common/ScrollButton";
 import { cn } from "../../utils/cn";
@@ -37,7 +37,7 @@ export const CategoryScrollList = ({
           "items-center sm:mx-8")}
       >
         {categories.map((c, index) => (
-          <CategoryCard key={c.id + "-" + index} category={c} />
+          <CategoryShowcaseCard key={c.id + "-" + index} category={c} />
         ))}
       </div>
       <ScrollButton

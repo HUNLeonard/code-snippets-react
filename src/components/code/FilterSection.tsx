@@ -54,9 +54,9 @@ export const FilterSection = ({ searchParams, setSearchParams }: FilterSectionPr
       className={cn(
         "w-full px-6 py-3 rounded-lg my-6",
         "bg-base-content/80 backdrop-blur-xs",
-        "md:sticky top-[var(--header-height)] z-30",
+        "md:sticky md:top-[var(--header-height)] z-30",
         "flex flex-col md:flex-row md:items-center justify-between",
-        "gap-4"
+        "gap-4 relative"
       )}
     >
       <H3 className="!text-base-100 flex items-center gap-2">
@@ -65,17 +65,19 @@ export const FilterSection = ({ searchParams, setSearchParams }: FilterSectionPr
       <form
         onSubmit={handleSubmit}
         className={cn("flex flex-1 focus-within:ring-2 rounded-md ",
-          "ring-primary focus-within:*:border-transparent md:max-w-lg")}>
+          "ring-primary focus-within:*:border-transparent md:max-w-lg"
+        )}>
         <Input
           value={inputQuery}
           onChange={handleSearchInputChange}
           labelClassName="flex-1"
           wrapperClassName="flex-1 min-w-32"
-          inputClassName="rounded-r-none !border-r-0 !ring-0 !ring-offset-0"
+          inputClassName="rounded-r-none !border-r-0 !ring-0 !ring-offset-0 transition-colors"
         />
         <button type="submit"
           className={cn("min-w-12 grid place-content-center bg-base-100",
-            " rounded-r-md border-2 border-l-0 border-black hover:bg-base-300")}>
+            " rounded-r-md border-2 border-l-0 border-black hover:bg-base-300",
+            "transition-colors")}>
           <SearchIcon size={32} />
         </button>
       </form>
@@ -98,7 +100,7 @@ export const FilterSection = ({ searchParams, setSearchParams }: FilterSectionPr
           options={categories}
           value={categoryIds}
           wrapperClassName={cn(
-            "absolute flex justify-center w-full ",
+            "absolute flex justify-center w-full",
             "bg-base-content p-2 rounded-b-md border-2 border-black border-t-0",
             !isCatFilterOpen && "hidden",
           )}
