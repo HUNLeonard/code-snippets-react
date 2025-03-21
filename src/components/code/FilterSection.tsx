@@ -6,7 +6,7 @@ import { TCategory } from "../../types/Category";
 import { useState } from "react";
 import { Button } from "../common/Button";
 import { Input } from "../common/Input";
-import CategorySelector from "../common/CategorySelector";
+import CategorySelector from "../category/CategorySelector";
 import { SetURLSearchParams } from "react-router-dom";
 
 interface FilterSectionProps {

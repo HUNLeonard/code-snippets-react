@@ -17,18 +17,17 @@ export const useCategoryStore = create<CategoryStore>()(
   persist(
     (set) => ({
       categories: [
-        { id: "11", name: "utils", slug: "utils", image: "" },
-        { id: "12", name: "hooks", slug: "hooks", image: "" },
-        { id: "13", name: "api's", slug: "apis", image: "" },
-        { id: "14", name: "tailwind", slug: "tailwind", image: "" },
-        { id: "15", name: "stack", slug: "stack", image: "" },
-        { id: "16", name: "common", slug: "common", image: "" },
+        { id: "11", name: "utils", image: "" },
+        { id: "12", name: "hooks", image: "" },
+        { id: "13", name: "api's", image: "" },
+        { id: "14", name: "tailwind", image: "" },
+        { id: "15", name: "stack", image: "" },
+        { id: "16", name: "common", image: "" },
       ],
       addCategory: ({ newName, newImage }) => {
         const newCategory: TCategory = {
           id: crypto.randomUUID(),
           name: newName,
-          slug: newName.toLowerCase().replace(/[^a-zA-Z0-9]/g, ""),
           image: newImage,
         };
         return set((store) => ({

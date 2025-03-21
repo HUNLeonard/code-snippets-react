@@ -2,8 +2,8 @@ import React, { useCallback } from "react";
 import { capitalizer } from "../../utils/capitalize";
 import { TCategory } from "../../types/Category";
 import { cn } from "../../utils/cn";
-import { LabelText } from "./LabelText";
-import { FormError } from "./FormError";
+import { LabelText } from "../common/LabelText";
+import { FormError } from "../common/FormError";
 
 interface CategorySelectorProps {
   options: TCategory[];

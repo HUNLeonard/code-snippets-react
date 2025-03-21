@@ -8,7 +8,7 @@ import CardImage from "../common/CardImage";
 const CategoryShowcaseCard = ({ category }: { category: TCategory }) => {
   return (
     <Link
-      to={`/codes?categories=${category.slug}`}
+      to={`/codes?categories=${category.id}`}
       className="card bg-base-100 shadow-sm group"
     >
       <CardImage src={category.image} name={category.name} />

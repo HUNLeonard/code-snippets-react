@@ -1,12 +1,17 @@
 import { usePopupStore } from "../../stores/popup.store";
-import { Button } from "./Button";
 import { cn } from "../../utils/cn";
 import { useCategoryStore } from "../../stores/category.store";
 import { useCodeStore } from "../../stores/code.store";
 import { H2 } from "./H2";
 import { useEffect, useState } from "react";
-import { SaveIcon, Trash2 } from "lucide-react";
 import { popupAnimDuration } from "../../shared/const";
+import { categorySchema } from "../schemas/category";
+import { codeSchema } from "../schemas/code";
+import { TCategory } from "../../types/Category";
+import CategoryEditForm from "../category/CategoryEditForm";
+import { TCode } from "../../types/Code";
+import CodeEditForm from "../code/CodeEditForm";
+
 
 const Popup = () => {
   const [isDeleting, setIsDeleting] = useState(false);
@@ -23,21 +28,33 @@ const Popup = () => {
   const removeCategory = useCategoryStore((store) => store.removeCategory);
   const removeCode = useCodeStore((store) => store.removeCode);
 
-
   useEffect(() => {
     if (!editingvalues) return;
-
     setIsDeleting(false);
     setIsClosing(false);
-
   }, [editingvalues, setIsDeleting, setIsClosing]);
 
-  if (!isopen || !editingvalues) return null
+  if (!isopen || !editingvalues) return null;
 
-  const handleEdit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if ("code" in editingvalues) updateCode(editingvalues);
-    else updateCategory(editingvalues);
+  const type = "code" in editingvalues ? "code" : "category";
+
+  const executeEdit = (data: categorySchema | codeSchema) => {
+    if (!editingvalues) return;
+    if (type === "code") {
+      updateCode({
+        id: editingvalues.id,
+        name: data.name,
+        code: (data as TCode).code,
+        desc: (data as TCode).desc,
+        categories: (data as TCode).categories,
+      });
+    } else if (type === "category") {
+      updateCategory({
+        id: editingvalues.id,
+        name: (data as TCategory).name,
+        image: (data as TCategory).image
+      });
+    }
 
     resetPopup();
   };
@@ -62,8 +79,15 @@ const Popup = () => {
     }, popupAnimDuration);
   };
 
-  const editingText = `Editing ${!editingvalues || "code" in editingvalues ? "Code" : "Category"
-    }`;
+  const editingText = `Editing ${type}`;
+
+  const renderEditForm = () => {
+    if (type === "code") {
+      return <CodeEditForm editingvalues={editingvalues as TCode} isDeleting={isDeleting} resetPopup={resetPopup} handleDelete={handleDelete} executeEdit={executeEdit} />;
+    } else {
+      return <CategoryEditForm editingvalues={editingvalues as TCategory} isDeleting={isDeleting} resetPopup={resetPopup} handleDelete={handleDelete} executeEdit={executeEdit} />;
+    }
+  }
 
   return (
     <div
@@ -74,8 +98,7 @@ const Popup = () => {
       )}
       style={{ animationDuration: `${popupAnimDuration}ms` }}
     >
-      <form
-        onSubmit={handleEdit}
+      <div
         className={cn(
           "bg-base-300 p-4 rounded-lg",
           "animation-floatUp max-w-lg w-full text-bg-content",
@@ -84,32 +107,9 @@ const Popup = () => {
         )}
         style={{ animationDuration: `${popupAnimDuration}ms` }}
       >
-        <H2 className="!my-0">{editingText}</H2>
-        <div className="flex flex-wrap justify-between gap-2">
-          <Button type="submit" className="flex items-center h-fit gap-2 !px-4 flex-1 whitespace-nowrap justify-center">
-            <SaveIcon />
-            Edit
-          </Button>
-          <Button
-            execute={handleDelete}
-            className={cn(
-              isDeleting
-                ? "!bg-error !text-error-content"
-                : "!bg-warning text-warning-content",
-              "flex items-center h-fit gap-2 !px-4 flex-1 whitespace-nowrap justify-center",
-            )}
-          >
-            <Trash2 />
-            {!isDeleting ? "Delete" : "Delete Confirm"}
-          </Button>
-          <Button
-            execute={resetPopup}
-            className="!bg-base-content/70 !text-base-100 flex-1 whitespace-nowrap "
-          >
-            Cancel
-          </Button>
-        </div>
-      </form>
+        <H2 className="!m-0">{editingText}</H2>
+        {renderEditForm()}
+      </div>
     </div>
   );
 };
