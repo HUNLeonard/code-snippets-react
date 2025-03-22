@@ -8,7 +8,7 @@ const RecentCodeLister = ({ codes }: { codes: TCode[] }) => {
     <>
       <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-4">
         {codes.map((code) => (
-          <RecentCodeCard key={code.id} code={code} />
+          <RecentCodeCard key={code._id} code={code} />
         ))}
       </div>
       <div className="flex justify-center mt-6">

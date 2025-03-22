@@ -1,7 +1,7 @@
 import { CSSProperties, memo, useEffect } from "react";
 import { Input } from "../common/Input";
 import useForm from "../../hooks/useForm";
-import { codeFormSchema, codeSchema } from "../schemas/code";
+import { codeFormSchema, codeSchema } from "../../schemas/code";
 import CategorySelector from "../category/CategorySelector";
 import { useCategoryStore } from "../../stores/category.store";
 import { TCategory } from "../../types/Category";
@@ -37,7 +37,7 @@ const CodeForm = ({
     execute,
     schema: codeFormSchema,
   });
-  const handleCategorySelector = (selectedCategories: TCategory["id"][]) => {
+  const handleCategorySelector = (selectedCategories: TCategory["_id"][]) => {
     setField("categories", selectedCategories);
   };
 

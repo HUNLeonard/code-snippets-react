@@ -3,12 +3,14 @@ import { CodeLister } from '../components/code/CodeLister'
 import EmptyList from '../components/common/EmptyList'
 import { H2 } from '../components/common/H2'
 import { useCodeStore } from '../stores/code.store'
+import { OWNERID } from '../shared/const'
 
 const ManageCodes = () => {
   const codes = useCodeStore(store => store.codes)
+  const ownersCodes = codes.filter(c => c.ownerId === OWNERID);
 
   const renderContent = useCallback(() => {
-    if (codes.length === 0) {
+    if (ownersCodes.length === 0) {
       return <EmptyList
         className="my-12"
         text="No code snippet with has been created yet!"
@@ -17,9 +19,9 @@ const ManageCodes = () => {
       />
     }
     else {
-      return <CodeLister codes={codes} manager={true} />
+      return <CodeLister codes={ownersCodes} manager={true} />
     }
-  }, [codes])
+  }, [ownersCodes])
 
   return (
     <main className="mx-2">

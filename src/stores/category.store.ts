@@ -5,30 +5,32 @@ import { persist } from "zustand/middleware";
 interface addCategory {
   newName: string;
   newImage: string;
+  ownerId: string;
 }
 
 interface CategoryStore {
   categories: TCategory[];
-  addCategory: ({ newName, newImage }: addCategory) => void;
+  addCategory: ({ newName, newImage, ownerId }: addCategory) => void;
   updateCategory: (uCategory: TCategory) => void;
-  removeCategory: (catId: TCategory["id"]) => void;
+  removeCategory: (catId: TCategory["_id"]) => void;
 }
 export const useCategoryStore = create<CategoryStore>()(
   persist(
     (set) => ({
       categories: [
-        { id: "11", name: "utils", image: "" },
-        { id: "12", name: "hooks", image: "" },
-        { id: "13", name: "api's", image: "" },
-        { id: "14", name: "tailwind", image: "" },
-        { id: "15", name: "stack", image: "" },
-        { id: "16", name: "common", image: "" },
+        { _id: "11", name: "utils", image: "", ownerId: "1" },
+        { _id: "12", name: "hooks", image: "", ownerId: "1" },
+        { _id: "13", name: "api's", image: "", ownerId: "1" },
+        { _id: "14", name: "tailwind", image: "", ownerId: "1" },
+        { _id: "15", name: "stack", image: "", ownerId: "1" },
+        { _id: "16", name: "common", image: "", ownerId: "1" },
       ],
-      addCategory: ({ newName, newImage }) => {
+      addCategory: ({ newName, newImage, ownerId = crypto.randomUUID() }) => {
         const newCategory: TCategory = {
-          id: crypto.randomUUID(),
+          _id: crypto.randomUUID(),
           name: newName,
           image: newImage,
+          ownerId,
         };
         return set((store) => ({
           categories: [...store.categories, newCategory],
@@ -37,7 +39,7 @@ export const useCategoryStore = create<CategoryStore>()(
       updateCategory: (uCategory) =>
         set((store) => ({
           categories: store.categories.map((c) =>
-            c.id !== uCategory.id
+            c._id !== uCategory._id
               ? c
               : {
                   ...c,
@@ -48,7 +50,7 @@ export const useCategoryStore = create<CategoryStore>()(
         })),
       removeCategory: (catId) =>
         set((store) => ({
-          categories: store.categories.filter((c) => c.id !== catId),
+          categories: store.categories.filter((c) => c._id !== catId),
         })),
     }),
     { name: "RCSCategories" },

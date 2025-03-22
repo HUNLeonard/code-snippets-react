@@ -14,7 +14,7 @@ export const CodeLister = ({
     <section className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 gap-4">
       {codes.map((code, index) => (
         <CodeCard
-          key={code.id}
+          key={code._id}
           code={code}
           manager={manager}
           style={{

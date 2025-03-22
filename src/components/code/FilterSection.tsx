@@ -38,7 +38,7 @@ export const FilterSection = ({ searchParams, setSearchParams }: FilterSectionPr
     });
   };
 
-  const handleCategoriesChange = (newCategories: TCategory["id"][]) => {
+  const handleCategoriesChange = (newCategories: TCategory["_id"][]) => {
     setSearchParams(params => {
       if (newCategories.length > 0) {
         params.set("categories", newCategories.join(" "));

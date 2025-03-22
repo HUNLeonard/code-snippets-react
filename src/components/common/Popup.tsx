@@ -5,8 +5,8 @@ import { useCodeStore } from "../../stores/code.store";
 import { H2 } from "./H2";
 import { useEffect, useState } from "react";
 import { popupAnimDuration } from "../../shared/const";
-import { categorySchema } from "../schemas/category";
-import { codeSchema } from "../schemas/code";
+import { categorySchema } from "../../schemas/category";
+import { codeSchema } from "../../schemas/code";
 import { TCategory } from "../../types/Category";
 import CategoryEditForm from "../category/CategoryEditForm";
 import { TCode } from "../../types/Code";
@@ -48,17 +48,19 @@ const Popup = () => {
     if (!editingvalues) return;
     if (type === "code") {
       updateCode({
-        id: editingvalues.id,
+        _id: editingvalues._id,
         name: data.name,
         code: (data as TCode).code,
         desc: (data as TCode).desc,
         categories: (data as TCode).categories,
+        ownerId: editingvalues.ownerId
       });
     } else if (type === "category") {
       updateCategory({
-        id: editingvalues.id,
+        _id: editingvalues._id,
         name: (data as TCategory).name,
-        image: (data as TCategory).image
+        image: (data as TCategory).image,
+        ownerId: editingvalues.ownerId
       });
     }
 
@@ -74,8 +76,8 @@ const Popup = () => {
       return;
     }
 
-    if ("code" in editingvalues) removeCode(editingvalues.id);
-    else removeCategory(editingvalues.id);
+    if ("code" in editingvalues) removeCode(editingvalues._id);
+    else removeCategory(editingvalues._id);
 
     resetPopup();
     openModal();

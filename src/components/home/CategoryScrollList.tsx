@@ -57,7 +57,7 @@ export const CategoryScrollList = ({
             )}
           >
             {categories.map((c, index) => (
-              <CategoryShowcaseCard key={c.id + "-" + index} category={c} />
+              <CategoryShowcaseCard key={c._id + "-" + index} category={c} />
             ))}
           </div>
           <ScrollButton

@@ -10,7 +10,7 @@ const RecentCodeCard = ({ code }: { code: TCode }) => {
 
   return (
     <Card
-      key={code.id}
+      key={code._id}
       className={cn(
         "transition-all duration-300",
         "!bg-base-200",
@@ -24,7 +24,7 @@ const RecentCodeCard = ({ code }: { code: TCode }) => {
           "hover:text-primary transition-[color,scale] duration-200",
         )}
       >
-        <Link to={`/codes/${code.id}`}>{code.name}</Link>
+        <Link to={`/codes/${code._id}`}>{code.name}</Link>
       </H3>
       <p
         title={code.desc}
@@ -34,7 +34,7 @@ const RecentCodeCard = ({ code }: { code: TCode }) => {
       </p>
       <div className="flex justify-between mt-auto pt-2">
         <Link
-          to={`/codes/${code.id}`}
+          to={`/codes/${code._id}`}
           className="text-warning hover:underline text-sm font-medium"
         >
           View Code

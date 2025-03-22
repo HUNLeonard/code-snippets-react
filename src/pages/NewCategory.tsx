@@ -2,10 +2,11 @@ import { useState } from "react";
 import CategoryForm from "../components/category/CategoryForm";
 import { Button } from "../components/common/Button";
 import { H2 } from "../components/common/H2";
-import { categorySchema } from "../components/schemas/category";
 import { useCategoryStore } from "../stores/category.store";
 import FormContainer from "../components/common/FormContainer";
 import { useModalStore } from "../stores/modal.store";
+import { OWNERID } from "../shared/const";
+import { categorySchema } from "../schemas/category";
 
 const defaultFormValues: categorySchema = {
   name: "",
@@ -23,6 +24,7 @@ const NewCategory = () => {
     addCategory({
       newName: data.name,
       newImage: data.image,
+      ownerId: OWNERID
     });
     openModal();
     setType("success");

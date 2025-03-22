@@ -5,34 +5,42 @@ import { persist } from "zustand/middleware";
 interface AddCodeProps {
   newName: string;
   code: string;
-  categories: TCode["id"][];
+  categories: TCode["_id"][];
   desc: TCode["desc"];
+  ownerId: string;
 }
 
 interface CodeStore {
   codes: TCode[];
   addCode: ({ newName, code, categories }: AddCodeProps) => void;
   updateCode: (uCode: TCode) => void;
-  removeCode: (codeId: TCode["id"]) => void;
+  removeCode: (codeId: TCode["_id"]) => void;
 }
 export const useCodeStore = create<CodeStore>()(
   persist(
     (set) => ({
       codes: [],
-      addCode: ({ newName, code, desc, categories }) => {
+      addCode: ({
+        newName,
+        code,
+        desc,
+        categories,
+        ownerId = crypto.randomUUID(),
+      }) => {
         const newCode: TCode = {
-          id: crypto.randomUUID(),
+          _id: crypto.randomUUID(),
           name: newName,
           code,
           desc,
           categories,
+          ownerId,
         };
         return set((store) => ({ codes: [...store.codes, newCode] }));
       },
       updateCode: (uCategory) =>
         set((store) => ({
           codes: store.codes.map((c) =>
-            c.id !== uCategory.id
+            c._id !== uCategory._id
               ? c
               : {
                   ...c,
@@ -47,7 +55,7 @@ export const useCodeStore = create<CodeStore>()(
         })),
       removeCode: (codeId) =>
         set((store) => ({
-          codes: store.codes.filter((c) => c.id !== codeId),
+          codes: store.codes.filter((c) => c._id !== codeId),
         })),
     }),
     { name: "RCSCodes" },

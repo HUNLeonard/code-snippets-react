@@ -1,8 +1,8 @@
 import { TCategory } from "../../types/Category";
 import CategoryForm from "./CategoryForm";
-import { categorySchema } from "../schemas/category";
 import { useState } from "react";
 import EditFormButtons from "../common/EditFormButtons";
+import { categorySchema } from "../../schemas/category";
 
 interface CategoryEditFormProps {
   editingvalues: TCategory;

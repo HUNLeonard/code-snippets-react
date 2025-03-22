@@ -18,7 +18,7 @@ const CodeHeader = ({ codeResult, categoryNames }: CodeHeaderProps) => {
 
       <div className="flex flex-wrap gap-2 mb-4">
         {categoryNames.map((cat) => (
-          <BubbleText key={cat.id} text={cat.name} tag={Link} tagProps={{ to: `/codes?categories=${cat.id}` }} />
+          <BubbleText key={cat._id} text={cat.name} tag={Link} tagProps={{ to: `/codes?categories=${cat._id}` }} />
         ))}
       </div>
 

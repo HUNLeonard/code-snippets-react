@@ -12,17 +12,16 @@ const CodePage = () => {
   const codeId = params.id || "";
   const codes = useCodeStore((store) => store.codes);
   const categories = useCategoryStore((store) => store.categories);
-  const codeResult = codes.find((c) => c.id === codeId);
-
+  const codeResult = codes.find((c) => c._id === codeId);
   if (!codeResult) {
     return (
       <>
         <EmptyList
           className="my-12"
           text={
-            <p className="text-base-content font-medium text-xl">
+            <span className="text-base-content font-medium text-xl">
               Sorry there is no code with this ID
-            </p>
+            </span>
           }
           buttonText='Create Code'
           to="/codes/new"
@@ -34,13 +33,13 @@ const CodePage = () => {
   const relatedCodes = codes
     .filter((c) =>
       c.categories.some(
-        (cat) => c.id !== codeResult.id && codeResult.categories.includes(cat),
+        (cat) => c._id !== codeResult._id && codeResult.categories.includes(cat),
       ),
     )
     .slice(0, 2);
 
   const categoryNames = categories.filter((cat) =>
-    codeResult.categories.includes(cat.id),
+    codeResult.categories.includes(cat._id),
   );
 
   return (

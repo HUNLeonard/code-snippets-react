@@ -13,7 +13,7 @@ export const CategoryLister = ({
     <section className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 gap-4 ">
       {categories.map((cat, index) => (
         <CategoryCard
-          key={cat.id}
+          key={cat._id}
           category={cat}
           manager={manager}
           style={{

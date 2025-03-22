@@ -1,7 +1,7 @@
 import CodeForm from "./CodeForm";
 import { useState } from "react";
 import { TCode } from "../../types/Code";
-import { codeSchema } from "../schemas/code";
+import { codeSchema } from "../../schemas/code";
 import EditFormButtons from "../common/EditFormButtons";
 
 interface CodeEditFormProps {

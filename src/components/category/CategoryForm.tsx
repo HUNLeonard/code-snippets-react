@@ -1,7 +1,7 @@
 import { CSSProperties, memo, useEffect } from "react";
 import { Input } from "../common/Input";
 import useForm from "../../hooks/useForm";
-import { categoryFormSchema, categorySchema } from "../schemas/category";
+import { categoryFormSchema, categorySchema } from "../../schemas/category";
 import { EyeIcon, FileText } from "lucide-react";
 
 interface CategoryFormProps {

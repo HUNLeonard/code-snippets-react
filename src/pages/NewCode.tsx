@@ -1,12 +1,13 @@
 import { H2 } from "../components/common/H2";
 import { useCodeStore } from "../stores/code.store";
-import { codeSchema } from "../components/schemas/code";
 import { Button } from "../components/common/Button";
 import { useState } from "react";
 import CodeForm from "../components/code/CodeForm";
 import FormContainer from "../components/common/FormContainer";
 import { PlusCircle } from "lucide-react";
 import { useModalStore } from "../stores/modal.store";
+import { OWNERID } from "../shared/const";
+import { codeSchema } from "../schemas/code";
 
 const defaultFormValues: codeSchema = {
   name: "",
@@ -28,6 +29,7 @@ const NewCode = () => {
       code: data.code,
       categories: data.categories,
       desc: data.desc,
+      ownerId: OWNERID
     });
     openModal();
     setType("success");

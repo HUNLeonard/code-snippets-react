@@ -8,8 +8,8 @@ import { LucideIcon } from "lucide-react";
 
 interface CategorySelectorProps {
   options: TCategory[];
-  onChange?: (selectedValue: TCategory["id"][]) => void;
-  value?: TCategory["id"][];
+  onChange?: (selectedValue: TCategory["_id"][]) => void;
+  value?: TCategory["_id"][];
   error?: string;
   name?: string;
   label?: string;
@@ -33,7 +33,7 @@ const CategorySelector = ({
   buttonClassName,
   icon: Icon
 }: CategorySelectorProps) => {
-  const toggleSelectedCategory = useCallback((categoryId: TCategory["id"]) => {
+  const toggleSelectedCategory = useCallback((categoryId: TCategory["_id"]) => {
     if (!onChange) return;
 
     if (value.includes(categoryId)) {
@@ -55,11 +55,11 @@ const CategorySelector = ({
             <button
               key={idx}
               type="button"
-              onClick={() => toggleSelectedCategory(o.id)}
+              onClick={() => toggleSelectedCategory(o._id)}
               className={cn(
                 "px-4 py-1 rounded-4xl shadow-md",
                 "hover:-translate-y-0.5 transition-transform duration-150",
-                value.includes(o.id)
+                value.includes(o._id)
                   ? "bg-accent text-accent-content font-medium ring-2 ring-primary-content"
                   : "bg-primary text-primary-content ",
                 buttonClassName,

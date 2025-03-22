@@ -30,7 +30,7 @@ const CategoryCard = ({ category, manager = false, style = {}, className }: Cate
       Tag="article"
       style={style}
       className={className}>
-      <Link to={`/codes?categories=${category.id}`} className="group">
+      <Link to={`/codes?categories=${category._id}`} className="group">
         <CardImage src={category.image} name={category.name} />
       </Link>
       <H3 className={cn("text-center",
@@ -38,7 +38,7 @@ const CategoryCard = ({ category, manager = false, style = {}, className }: Cate
         "hover:text-primary transition-[color,scale] duration-200",
       )}
         title={category.name}>
-        <Link to={`/codes?categories=${category.id}`}>
+        <Link to={`/codes?categories=${category._id}`}>
           {capitalizer(category.name)}
         </Link>
       </H3>

@@ -44,7 +44,7 @@ export const CodeCard = ({
 
         title={code.name}
       >
-        <Link to={`/codes/${code.id}`}>{code.name}</Link>
+        <Link to={`/codes/${code._id}`}>{code.name}</Link>
       </H3>
       <p
         className={`${!showMore && "line-clamp-2"
@@ -81,7 +81,7 @@ export const CodeCard = ({
           {copied ? "Copied!" : "Copy"}
         </button>
         <Link
-          to={`/codes/${code.id}`}
+          to={`/codes/${code._id}`}
           className="text-warning font-medium whitespace-nowrap"
         >
           View Code
