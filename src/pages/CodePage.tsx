@@ -1,4 +1,3 @@
-import { H2 } from "../components/common/H2";
 import { useParams } from "react-router-dom";
 import { useCodeStore } from "../stores/code.store";
 import { useCategoryStore } from "../stores/category.store";
@@ -6,6 +5,7 @@ import CodeHeader from "../components/codePage/CodeHeader";
 import CodeSnippetViewer from "../components/codePage/CodeSnippetViewer";
 import CopyCodeButton from "../components/codePage/CopyCodeButton";
 import RelatedCodeSnippets from "../components/codePage/RelatedCodeSnippets";
+import EmptyList from "../components/common/EmptyList";
 
 const CodePage = () => {
   const params = useParams();
@@ -16,7 +16,18 @@ const CodePage = () => {
 
   if (!codeResult) {
     return (
-      <H2 className="text-center my-16">Sorry there is no code with this ID</H2>
+      <>
+        <EmptyList
+          className="my-12"
+          text={
+            <p className="text-base-content font-medium text-xl">
+              Sorry there is no code with this ID
+            </p>
+          }
+          buttonText='Create Code'
+          to="/codes/new"
+        />
+      </>
     );
   }
 
@@ -37,7 +48,10 @@ const CodePage = () => {
       <CodeHeader codeResult={codeResult} categoryNames={categoryNames} />
       <CodeSnippetViewer codeResult={codeResult} />
       <CopyCodeButton codeSnippet={codeResult.code} />
-      <RelatedCodeSnippets relatedCodes={relatedCodes} categories={categories} />
+      <RelatedCodeSnippets
+        relatedCodes={relatedCodes}
+        categories={categories}
+      />
     </main>
   );
 };

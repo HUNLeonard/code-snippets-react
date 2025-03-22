@@ -1,14 +1,27 @@
-import { Link } from "react-router-dom";
 import { useCodeStore } from "../../stores/code.store";
 import { H2 } from "../common/H2";
-import { cn } from "../../utils/cn";
 import { Code } from "lucide-react";
-import RecentCodeCard from "./RecentCodeCard";
+import RecentCodeLister from "./RecentCodeLister";
+import EmptyList from "../common/EmptyList";
+import { useCallback } from "react";
 
 const RecentCodeShowCase = () => {
   const codes = useCodeStore((state) => state.codes);
-
   const recentCodes = codes.slice(0, 4);
+
+  const renderContent = useCallback(() => {
+    if (recentCodes.length === 0) {
+      return (
+        <EmptyList
+          text="No code snippet has been created yet!"
+          buttonText="Create Code"
+          to="/codes/new"
+        />
+      );
+    } else {
+      return <RecentCodeLister codes={recentCodes} />;
+    }
+  }, [recentCodes]);
 
   return (
     <section
@@ -19,23 +32,7 @@ const RecentCodeShowCase = () => {
         <Code size={32} className="text-primary" />
         Recently added codes
       </H2>
-      <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-4">
-        {recentCodes.map((code) => (
-          <RecentCodeCard key={code.id} code={code} />
-        ))}
-      </div>
-      <div className="flex justify-center mt-6">
-        <Link
-          to="/codes"
-          className={cn(
-            "px-6 py-2 bg-primary/20 text-primary-content rounded-full",
-            "hover:bg-primary/30 transition-colors duration-200",
-            "flex items-center justify-center gap-2 font-medium",
-          )}
-        >
-          View All Snippets
-        </Link>
-      </div>
+      {renderContent()}
     </section>
   );
 };

@@ -3,7 +3,8 @@ import { H2 } from "../components/common/H2";
 import { CodeLister } from "../components/code/CodeLister";
 import { useCodeStore } from "../stores/code.store";
 import { FilterSection } from "../components/code/FilterSection";
-import { useMemo } from "react";
+import { useMemo, useCallback } from "react";
+import EmptyList from "../components/common/EmptyList";
 
 const Codes = () => {
   const allCodes = useCodeStore((store) => store.codes);
@@ -33,6 +34,27 @@ const Codes = () => {
     });
   }, [allCodes, q, categoryIds]);
 
+  const renderContent = useCallback(() => {
+    if (allCodes.length === 0) {
+      return <EmptyList
+        className="my-12"
+        text="No code snippet with has been created yet!"
+        buttonText='Create Code'
+        to="/codes/new"
+      />
+    }
+    else if (filteredCodes.length === 0) {
+      return <EmptyList
+        className="my-12"
+        text="No code snippet with these search parameters exists yet!"
+        buttonText='Create Code'
+        to="/codes/new"
+      />
+    } else {
+      return <CodeLister codes={filteredCodes} />
+    }
+  }, [filteredCodes, allCodes.length])
+
   return (
     <main className="mx-2">
       <H2>Codes</H2>
@@ -40,7 +62,7 @@ const Codes = () => {
         searchParams={searchParams}
         setSearchParams={setSearchParams}
       />
-      <CodeLister codes={filteredCodes} />
+      {renderContent()}
     </main>
   );
 };
