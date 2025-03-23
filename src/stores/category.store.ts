@@ -8,7 +8,6 @@ import {
 } from "../api/api-client";
 import { CATEGORIES_QUERY_KEY } from "../shared/const";
 
-// Hook to access categories
 export const useCategoryStore = () => {
   const queryClient = useQueryClient();
 
@@ -38,7 +37,13 @@ export const useCategoryStore = () => {
 
   // update
   const updateCategoryMutation = useMutation({
-    mutationFn: updateCategoryAPI,
+    mutationFn: ({
+      category,
+      ownerId,
+    }: {
+      category: TCategory;
+      ownerId: string;
+    }) => updateCategoryAPI(category, ownerId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [CATEGORIES_QUERY_KEY] });
     },
@@ -46,7 +51,8 @@ export const useCategoryStore = () => {
 
   // remove
   const removeCategoryMutation = useMutation({
-    mutationFn: deleteCategory,
+    mutationFn: ({ id, ownerId }: { id: string; ownerId: string }) =>
+      deleteCategory(id, ownerId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [CATEGORIES_QUERY_KEY] });
     },
@@ -54,14 +60,31 @@ export const useCategoryStore = () => {
 
   return {
     categories,
-    addCategory: (data: {
+    addCategory: async (data: {
       newName: string;
       newImage: string;
       ownerId: string;
-    }) => addCategoryMutation.mutate(data),
-    updateCategory: (category: TCategory) =>
-      updateCategoryMutation.mutate(category),
-    removeCategory: (id: string) => removeCategoryMutation.mutate(id),
+    }) => {
+      return addCategoryMutation.mutateAsync(data);
+    },
+    updateCategory: async ({
+      category,
+      ownerId,
+    }: {
+      category: TCategory;
+      ownerId: string;
+    }) => {
+      return updateCategoryMutation.mutateAsync({ category, ownerId });
+    },
+    removeCategory: async ({
+      id,
+      ownerId,
+    }: {
+      id: string;
+      ownerId: string;
+    }) => {
+      return removeCategoryMutation.mutateAsync({ id, ownerId });
+    },
     isLoading:
       isFetching ||
       addCategoryMutation.isPending ||

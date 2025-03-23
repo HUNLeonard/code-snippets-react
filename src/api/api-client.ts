@@ -25,16 +25,21 @@ export const createCategory = async (
 
 export const updateCategory = async (
   category: TCategory,
+  ownerId: string,
 ): Promise<TCategory> => {
-  const response = await apiClient.put(
-    `/api/categories/${category._id}`,
-    category,
-  );
+  const response = await apiClient.put(`/api/categories/${category._id}`, {
+    data: { name: category.image, image: category.image, ownerId },
+  });
   return response.data;
 };
 
-export const deleteCategory = async (id: string): Promise<void> => {
-  await apiClient.delete(`/api/categories/${id}`);
+export const deleteCategory = async (
+  id: string,
+  ownerId: string,
+): Promise<void> => {
+  await apiClient.delete(`/api/categories/${id}`, {
+    data: { ownerId },
+  });
 };
 
 // Code API
@@ -43,16 +48,37 @@ export const fetchCodes = async (): Promise<TCode[]> => {
   return response.data;
 };
 
+export const fetchCode = async (codeId: TCode["_id"]): Promise<TCode[]> => {
+  const response = await apiClient.get(`/api/codes/${codeId}`);
+  return response.data;
+};
+
 export const createCode = async (code: Omit<TCode, "_id">): Promise<TCode> => {
   const response = await apiClient.post("/api/codes", code);
   return response.data;
 };
 
-export const updateCode = async (code: TCode): Promise<TCode> => {
-  const response = await apiClient.put(`/api/codes/${code._id}`, code);
+export const updateCode = async (
+  code: TCode,
+  ownerId: string,
+): Promise<TCode> => {
+  const response = await apiClient.put(`/api/codes/${code._id}`, {
+    data: {
+      name: code.name,
+      code: code.code,
+      desc: code.desc,
+      categories: code.categories,
+      ownerId,
+    },
+  });
   return response.data;
 };
 
-export const deleteCode = async (id: string): Promise<void> => {
-  await apiClient.delete(`/api/codes/${id}`);
+export const deleteCode = async (
+  id: string,
+  ownerId: string,
+): Promise<void> => {
+  await apiClient.delete(`/api/codes/${id}`, {
+    data: { ownerId },
+  });
 };

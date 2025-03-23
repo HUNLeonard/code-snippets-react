@@ -23,17 +23,28 @@ const NewCode = () => {
   const setText = useModalStore(store => store.setText)
   const { addCode, isLoading: CodeLoading } = useCodeStore();
 
-  const executeAddCode = (data: codeSchema) => {
-    addCode({
-      newName: data.name,
-      code: data.code,
-      categories: data.categories,
-      desc: data.desc,
-      ownerId: OWNERID
-    });
-    openModal();
-    setType("success");
-    setText("Code Added Successfully!");
+  const executeAddCode = async (data: codeSchema) => {
+    setIsFormLoading(true);
+    try {
+      await addCode({
+        newName: data.name,
+        code: data.code,
+        categories: data.categories,
+        desc: data.desc,
+        ownerId: OWNERID
+      });
+
+      openModal();
+      setType("success");
+      setText("Code Added Successfully!");
+    } catch (error) {
+      openModal();
+      setType("error");
+      setText("Failed to add code snippet");
+      console.error(error);
+    } finally {
+      setIsFormLoading(false);
+    }
   };
 
   return (

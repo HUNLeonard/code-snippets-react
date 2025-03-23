@@ -41,7 +41,8 @@ export const useCodeStore = () => {
 
   // update
   const updateCodeMutation = useMutation({
-    mutationFn: updateCodeAPI,
+    mutationFn: ({ code, ownerId }: { code: TCode; ownerId: string }) =>
+      updateCodeAPI(code, ownerId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [CODES_QUERY_KEY] });
     },
@@ -49,7 +50,8 @@ export const useCodeStore = () => {
 
   // remove
   const removeCodeMutation = useMutation({
-    mutationFn: deleteCode,
+    mutationFn: ({ id, ownerId }: { id: string; ownerId: string }) =>
+      deleteCode(id, ownerId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [CODES_QUERY_KEY] });
     },
@@ -57,15 +59,21 @@ export const useCodeStore = () => {
 
   return {
     codes,
-    addCode: (data: {
+    addCode: async (data: {
       newName: string;
       code: string;
       desc: string;
       categories: string[];
       ownerId: string;
-    }) => addCodeMutation.mutate(data),
-    updateCode: (code: TCode) => updateCodeMutation.mutate(code),
-    removeCode: (id: string) => removeCodeMutation.mutate(id),
+    }) => {
+      return addCodeMutation.mutateAsync(data);
+    },
+    updateCode: async ({ code, ownerId }: { code: TCode; ownerId: string }) => {
+      return updateCodeMutation.mutateAsync({ code, ownerId });
+    },
+    removeCode: async ({ id, ownerId }: { id: string; ownerId: string }) => {
+      return removeCodeMutation.mutateAsync({ id, ownerId });
+    },
     isLoading:
       isFetching ||
       addCodeMutation.isPending ||

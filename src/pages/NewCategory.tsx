@@ -14,21 +14,32 @@ const defaultFormValues: categorySchema = {
 };
 
 const NewCategory = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isFormLoading, setIsFormLoading] = useState(false);
   const openModal = useModalStore(store => store.openModal)
   const setType = useModalStore(store => store.setType)
   const setText = useModalStore(store => store.setText)
   const { addCategory, isLoading: CatLoading } = useCategoryStore();
 
-  const executeAddCategory = (data: categorySchema) => {
-    addCategory({
-      newName: data.name,
-      newImage: data.image,
-      ownerId: OWNERID
-    });
-    openModal();
-    setType("success");
-    setText("Category Added Successfully!");
+  const executeAddCategory = async (data: categorySchema) => {
+    setIsFormLoading(true);
+    try {
+      await addCategory({
+        newName: data.name,
+        newImage: data.image,
+        ownerId: OWNERID
+      });
+
+      openModal();
+      setType("success");
+      setText("Category Added Successfully!");
+    } catch (error) {
+      openModal();
+      setType("error");
+      setText("Failed to add category");
+      console.error(error);
+    } finally {
+      setIsFormLoading(false);
+    }
   };
 
   return (
@@ -38,10 +49,10 @@ const NewCategory = () => {
         <CategoryForm
           defaultFormValues={defaultFormValues}
           execute={executeAddCategory}
-          setLoading={setIsLoading}
+          setLoading={setIsFormLoading}
           formClass="flex flex-col max-w-md mx-auto space-y-4"
         >
-          <Button disabled={isLoading || CatLoading} className="w-fit mx-auto !bg-accent" type="submit">
+          <Button disabled={isFormLoading || CatLoading} className="w-fit mx-auto !bg-accent" type="submit">
             Add New Category
           </Button>
         </CategoryForm>

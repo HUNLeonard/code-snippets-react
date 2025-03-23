@@ -10,9 +10,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist",
-    "server": "nodemon server.js",
-    "start": "concurrently \"npm run server\" \"npm run dev\" --names \"SERVER,APP\" --prefix-colors \"blue,green\""
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.0.14",
