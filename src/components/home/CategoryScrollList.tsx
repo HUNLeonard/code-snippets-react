@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { TCategory } from "../../types/Category";
 import CategoryShowcaseCard from "./CategoryShowcaseCard";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -13,15 +13,7 @@ export const CategoryScrollList = ({
   categories: TCategory[];
   isLoading: boolean
 }) => {
-  const categoryContainer = useRef<HTMLDivElement | null>(null);
-  const [containerElement, setContainerElement] =
-    useState<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    if (categoryContainer.current) {
-      setContainerElement(categoryContainer.current);
-    }
-  }, []);
+  const categoryContainer = useRef<HTMLDivElement>(null);
 
   const scrollHorizintal = (direction: "left" | "right") => {
     if (!categoryContainer.current) return;
@@ -47,7 +39,7 @@ export const CategoryScrollList = ({
               icon={ChevronLeft}
               execute={() => scrollHorizintal("left")}
               className="left-0 top-1/2 -translate-y-1/2 max-sm:bg-primary/20"
-              container={containerElement}
+              containerRef={categoryContainer}
             />
             <div
               ref={categoryContainer}
@@ -68,7 +60,7 @@ export const CategoryScrollList = ({
               icon={ChevronRight}
               execute={() => scrollHorizintal("right")}
               className="right-0 top-1/2 -translate-y-1/2 max-sm:bg-primary/20"
-              container={containerElement}
+              containerRef={categoryContainer}
             />
             <div className="max-md:hidden absolute right-0 inset-y-0 w-14 bg-gradient-to-r from-transparent to-20% to-base-300 z-10" />
           </>
