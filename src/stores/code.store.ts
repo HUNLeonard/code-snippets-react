@@ -29,7 +29,7 @@ export const useCodeStore = () => {
       return createCode({
         name: newCodeData.newName,
         code: newCodeData.code,
-        desc: newCodeData.desc,
+        desc: newCodeData.desc || "",
         categories: newCodeData.categories,
         ownerId: newCodeData.ownerId,
       });

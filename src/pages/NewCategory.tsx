@@ -7,6 +7,7 @@ import FormContainer from "../components/common/FormContainer";
 import { useModalStore } from "../stores/modal.store";
 import { OWNERID } from "../shared/const";
 import { categorySchema } from "../schemas/category";
+import { AxiosError } from "axios";
 
 const defaultFormValues: categorySchema = {
   name: "",
@@ -35,7 +36,8 @@ const NewCategory = () => {
     } catch (error) {
       openModal();
       setType("error");
-      setText("Failed to add category");
+      const errorMessage = error instanceof AxiosError ? error.response?.data?.message : "Failed to add category";
+      setText(errorMessage);
       console.error(error);
     } finally {
       setIsFormLoading(false);

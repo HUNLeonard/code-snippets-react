@@ -26,7 +26,7 @@ export const useCategoryStore = () => {
     }) => {
       return createCategory({
         name: newCategory.newName,
-        image: newCategory.newImage,
+        image: newCategory.newImage || "",
         ownerId: newCategory.ownerId,
       });
     },

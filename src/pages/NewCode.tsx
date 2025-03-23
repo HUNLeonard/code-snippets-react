@@ -8,6 +8,7 @@ import { PlusCircle } from "lucide-react";
 import { useModalStore } from "../stores/modal.store";
 import { OWNERID } from "../shared/const";
 import { codeSchema } from "../schemas/code";
+import { AxiosError } from "axios";
 
 const defaultFormValues: codeSchema = {
   name: "",
@@ -40,7 +41,8 @@ const NewCode = () => {
     } catch (error) {
       openModal();
       setType("error");
-      setText("Failed to add code snippet");
+      const errorMessage = error instanceof AxiosError ? error.response?.data?.message : "Failed to add code snippet";
+      setText(errorMessage);
       console.error(error);
     } finally {
       setIsFormLoading(false);

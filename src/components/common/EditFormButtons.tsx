@@ -1,8 +1,6 @@
 import { Button } from './Button'
 import { SaveIcon, Trash2 } from 'lucide-react'
 import { cn } from '../../utils/cn'
-import { LoadingText } from './LoadingText'
-
 
 interface EditFormButtonsProps {
   isLoading: boolean
@@ -13,14 +11,16 @@ interface EditFormButtonsProps {
 
 const EditFormButtons = ({ isLoading, isDeleting, resetPopup, handleDelete }: EditFormButtonsProps) => {
   return (
-    <div className="flex flex-wrap justify-between gap-2">
+    <div className={cn("flex flex-wrap justify-between gap-2",
+      isLoading && "flex-col"
+    )}>
       <Button
         type="submit"
         className="flex items-center h-fit gap-2 whitespace-nowrap justify-center"
         disabled={isLoading}
       >
         <SaveIcon />
-        {isLoading ? <LoadingText /> : "Edit"}
+        Edit
       </Button>
       <Button
         execute={handleDelete}
@@ -34,9 +34,7 @@ const EditFormButtons = ({ isLoading, isDeleting, resetPopup, handleDelete }: Ed
         disabled={isLoading}
       >
         <Trash2 />
-        {isLoading ? (
-          <LoadingText />
-        ) : !isDeleting ? (
+        {!isDeleting ? (
           "Delete"
         ) : (
           "Delete Confirm"

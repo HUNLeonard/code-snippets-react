@@ -26,7 +26,7 @@ export default function useForm<T>({
         setIsLoading(true);
         schema.parse(formData);
         await new Promise((res) => setTimeout(res, Math.random() * 1000));
-        execute({ ...formData });
+        await execute({ ...formData });
         setFormData({ ...defaultFormValues });
       } catch (error) {
         if (error instanceof z.ZodError) {

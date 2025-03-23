@@ -15,6 +15,7 @@ import { useModalStore } from "../../stores/modal.store";
 import { capitalizer } from "../../utils/capitalize";
 import LoadingSpinner from "./LoadingSpinner";
 import { X } from "lucide-react";
+import { AxiosError } from "axios";
 
 
 const Popup = () => {
@@ -76,17 +77,18 @@ const Popup = () => {
         });
       }
 
-      resetPopup();
       openModal();
       setType("success");
       setText(capitalizer(type) + " Updated Successfully!");
     } catch (error) {
       openModal();
       setType("error");
-      setText("Failed to update " + capitalizer(type));
+      const errorMessage = error instanceof AxiosError ? error.response?.data?.message : "Failed to update " + capitalizer(type);
+      setText(errorMessage);
       console.error(error);
     } finally {
       setIsSubmitting(false);
+      resetPopup();
     }
   };
 
@@ -104,17 +106,19 @@ const Popup = () => {
         await removeCategory({ id: editingvalues._id, ownerId: OWNERID });
       }
 
-      resetPopup();
+
       openModal();
       setType("success");
       setText(capitalizer(type) + " Deleted Successfully!");
     } catch (error) {
       openModal();
       setType("error");
-      setText("Failed to delete " + capitalizer(type));
+      const errorMessage = error instanceof AxiosError ? error.response?.data?.message : "Failed to delete " + capitalizer(type);
+      setText(errorMessage);
       console.error(error);
     } finally {
       setIsSubmitting(false);
+      resetPopup();
     }
   };
 

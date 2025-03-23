@@ -28,7 +28,9 @@ export const updateCategory = async (
   ownerId: string,
 ): Promise<TCategory> => {
   const response = await apiClient.put(`/api/categories/${category._id}`, {
-    data: { name: category.image, image: category.image, ownerId },
+    name: category.name,
+    image: category.image,
+    ownerId,
   });
   return response.data;
 };
@@ -63,13 +65,11 @@ export const updateCode = async (
   ownerId: string,
 ): Promise<TCode> => {
   const response = await apiClient.put(`/api/codes/${code._id}`, {
-    data: {
-      name: code.name,
-      code: code.code,
-      desc: code.desc,
-      categories: code.categories,
-      ownerId,
-    },
+    name: code.name,
+    code: code.code,
+    desc: code.desc,
+    categories: code.categories,
+    ownerId,
   });
   return response.data;
 };
