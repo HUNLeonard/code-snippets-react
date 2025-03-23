@@ -11,7 +11,8 @@
     "preview": "vite preview",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
-    "server": "nodemon server.js"
+    "server": "nodemon server.js",
+    "start": "concurrently \"npm run server\" \"npm run dev\" --names \"SERVER,APP\" --prefix-colors \"blue,green\""
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.0.14",
@@ -37,6 +38,7 @@
     "@types/react-dom": "^19.0.4",
     "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.4.21",
+    "concurrently": "^9.1.2",
     "eslint": "^9.21.0",
     "eslint-plugin-react-hooks": "^5.1.0",
     "eslint-plugin-react-refresh": "^0.4.19",
