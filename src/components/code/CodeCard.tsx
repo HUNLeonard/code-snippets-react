@@ -73,7 +73,7 @@ export const CodeCard = ({
           "*:active:translate-y-0.25 *:active:brightness-50",
           "*:transition-transform *:duration-200 *:ease-in-out",
           "*:disabled:text-base-content/50 *:disabled:!cursor-not-allowed",
-          "*:flex-1"
+          "*:flex-1 mt-auto"
         )}
       >
         <button className={"w-fit flex gap-2 items-center"} onClick={copyToClipboard} disabled={copied}>
