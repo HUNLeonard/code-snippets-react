@@ -17,11 +17,11 @@ const defaultFormValues: codeSchema = {
 };
 
 const NewCode = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isFormLoading, setIsFormLoading] = useState(false);
   const openModal = useModalStore(store => store.openModal)
   const setType = useModalStore(store => store.setType)
   const setText = useModalStore(store => store.setText)
-  const addCode = useCodeStore((store) => store.addCode);
+  const { addCode, isLoading: CodeLoading } = useCodeStore();
 
   const executeAddCode = (data: codeSchema) => {
     addCode({
@@ -43,11 +43,11 @@ const NewCode = () => {
         <CodeForm
           defaultFormValues={defaultFormValues}
           execute={executeAddCode}
-          setLoading={setIsLoading}
+          setLoading={setIsFormLoading}
           formClass="flex flex-col max-w-md mx-auto space-y-4"
         >
           <Button
-            disabled={isLoading}
+            disabled={isFormLoading || CodeLoading}
             className="w-fit mx-auto !bg-accent !px-4"
             type="submit"
           >

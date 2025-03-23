@@ -24,7 +24,8 @@ const CodeForm = ({
   formClass,
   formStyle,
 }: CodeFormProps) => {
-  const categories = useCategoryStore((store) => store.categories);
+
+  const { categories, isLoading: CatLoading } = useCategoryStore();
   const {
     formData,
     formError,
@@ -78,6 +79,7 @@ const CodeForm = ({
       <CategorySelector
         options={categories}
         value={formData.categories}
+        isLoading={CatLoading}
         onChange={handleCategorySelector}
         error={formError.categories}
         name="categories"

@@ -4,13 +4,17 @@ import { Code } from "lucide-react";
 import RecentCodeLister from "./RecentCodeLister";
 import EmptyList from "../common/EmptyList";
 import { useCallback } from "react";
+import LoadingSpinner from "../common/LoadingSpinner";
 
 const RecentCodeShowCase = () => {
-  const codes = useCodeStore((state) => state.codes);
-  const recentCodes = codes.slice(0, 4);
+  const { codes, isLoading } = useCodeStore();
+
 
   const renderContent = useCallback(() => {
-    if (recentCodes.length === 0) {
+    if (isLoading) {
+      return <LoadingSpinner />;
+    }
+    if (codes.length === 0) {
       return (
         <EmptyList
           text="No code snippet has been created yet!"
@@ -19,9 +23,10 @@ const RecentCodeShowCase = () => {
         />
       );
     } else {
+      const recentCodes = codes.slice(0, 4);
       return <RecentCodeLister codes={recentCodes} />;
     }
-  }, [recentCodes]);
+  }, [codes, isLoading]);
 
   return (
     <section

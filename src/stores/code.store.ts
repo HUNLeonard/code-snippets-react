@@ -1,63 +1,75 @@
-import { create } from "zustand";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { TCode } from "../types/Code";
-import { persist } from "zustand/middleware";
+import {
+  fetchCodes,
+  createCode,
+  updateCode as updateCodeAPI,
+  deleteCode,
+} from "../api/api-client";
+import { CODES_QUERY_KEY } from "../shared/const";
 
-interface AddCodeProps {
-  newName: string;
-  code: string;
-  categories: TCode["_id"][];
-  desc: TCode["desc"];
-  ownerId: string;
-}
+export const useCodeStore = () => {
+  const queryClient = useQueryClient();
 
-interface CodeStore {
-  codes: TCode[];
-  addCode: ({ newName, code, categories }: AddCodeProps) => void;
-  updateCode: (uCode: TCode) => void;
-  removeCode: (codeId: TCode["_id"]) => void;
-}
-export const useCodeStore = create<CodeStore>()(
-  persist(
-    (set) => ({
-      codes: [],
-      addCode: ({
-        newName,
-        code,
-        desc,
-        categories,
-        ownerId = crypto.randomUUID(),
-      }) => {
-        const newCode: TCode = {
-          _id: crypto.randomUUID(),
-          name: newName,
-          code,
-          desc,
-          categories,
-          ownerId,
-        };
-        return set((store) => ({ codes: [...store.codes, newCode] }));
-      },
-      updateCode: (uCategory) =>
-        set((store) => ({
-          codes: store.codes.map((c) =>
-            c._id !== uCategory._id
-              ? c
-              : {
-                  ...c,
-                  name: uCategory.name.length > 0 ? uCategory.name : c.name,
-                  code: uCategory.code.length > 0 ? uCategory.code : c.code,
-                  categories:
-                    uCategory.categories.length > 0
-                      ? uCategory.categories
-                      : c.categories,
-                },
-          ),
-        })),
-      removeCode: (codeId) =>
-        set((store) => ({
-          codes: store.codes.filter((c) => c._id !== codeId),
-        })),
-    }),
-    { name: "RCSCodes" },
-  ),
-);
+  // fetch
+  const { data: codes = [], isLoading: isFetching } = useQuery({
+    queryKey: [CODES_QUERY_KEY],
+    queryFn: fetchCodes,
+  });
+
+  // add
+  const addCodeMutation = useMutation({
+    mutationFn: (newCodeData: {
+      newName: string;
+      code: string;
+      desc: string;
+      categories: string[];
+      ownerId: string;
+    }) => {
+      return createCode({
+        name: newCodeData.newName,
+        code: newCodeData.code,
+        desc: newCodeData.desc,
+        categories: newCodeData.categories,
+        ownerId: newCodeData.ownerId,
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [CODES_QUERY_KEY] });
+    },
+  });
+
+  // update
+  const updateCodeMutation = useMutation({
+    mutationFn: updateCodeAPI,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [CODES_QUERY_KEY] });
+    },
+  });
+
+  // remove
+  const removeCodeMutation = useMutation({
+    mutationFn: deleteCode,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [CODES_QUERY_KEY] });
+    },
+  });
+
+  return {
+    codes,
+    addCode: (data: {
+      newName: string;
+      code: string;
+      desc: string;
+      categories: string[];
+      ownerId: string;
+    }) => addCodeMutation.mutate(data),
+    updateCode: (code: TCode) => updateCodeMutation.mutate(code),
+    removeCode: (id: string) => removeCodeMutation.mutate(id),
+    isLoading:
+      isFetching ||
+      addCodeMutation.isPending ||
+      updateCodeMutation.isPending ||
+      removeCodeMutation.isPending,
+  };
+};

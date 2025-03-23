@@ -4,12 +4,16 @@ import EmptyList from '../components/common/EmptyList'
 import { H2 } from '../components/common/H2'
 import { useCodeStore } from '../stores/code.store'
 import { OWNERID } from '../shared/const'
+import LoadingSpinner from '../components/common/LoadingSpinner'
 
 const ManageCodes = () => {
-  const codes = useCodeStore(store => store.codes)
-  const ownersCodes = codes.filter(c => c.ownerId === OWNERID);
+  const { codes, isLoading } = useCodeStore()
 
   const renderContent = useCallback(() => {
+    if (isLoading) {
+      return <LoadingSpinner />;
+    }
+    const ownersCodes = codes.filter(c => c.ownerId === OWNERID);
     if (ownersCodes.length === 0) {
       return <EmptyList
         className="my-12"
@@ -21,7 +25,7 @@ const ManageCodes = () => {
     else {
       return <CodeLister codes={ownersCodes} manager={true} />
     }
-  }, [ownersCodes])
+  }, [codes, isLoading])
 
   return (
     <main className="mx-2">

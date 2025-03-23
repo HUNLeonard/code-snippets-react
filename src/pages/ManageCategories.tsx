@@ -4,12 +4,16 @@ import { H2 } from '../components/common/H2'
 import { useCategoryStore } from '../stores/category.store';
 import EmptyList from '../components/common/EmptyList';
 import { OWNERID } from '../shared/const';
+import LoadingSpinner from '../components/common/LoadingSpinner';
 
 const ManageCategories = () => {
-  const categories = useCategoryStore(store => store.categories)
-  const ownersCategories = categories.filter(c => c.ownerId === OWNERID);
+  const { categories, isLoading } = useCategoryStore();
 
   const renderContent = useCallback(() => {
+    if (isLoading) {
+      return <LoadingSpinner />;
+    }
+    const ownersCategories = categories.filter(c => c.ownerId === OWNERID);
     if (ownersCategories.length === 0) {
       return <EmptyList
         className="my-12"
@@ -21,7 +25,7 @@ const ManageCategories = () => {
     else {
       return <CategoryLister categories={ownersCategories} manager={true} />
     }
-  }, [ownersCategories])
+  }, [categories, isLoading])
 
 
   return (

@@ -5,9 +5,10 @@ import { useCodeStore } from "../stores/code.store";
 import { FilterSection } from "../components/code/FilterSection";
 import { useMemo, useCallback } from "react";
 import EmptyList from "../components/common/EmptyList";
+import LoadingSpinner from "../components/common/LoadingSpinner";
 
 const Codes = () => {
-  const allCodes = useCodeStore((store) => store.codes);
+  const { codes, isLoading } = useCodeStore();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const q = searchParams.get("q") || "";
@@ -16,7 +17,7 @@ const Codes = () => {
   }, [searchParams]);
 
   const filteredCodes = useMemo(() => {
-    return allCodes.filter((code) => {
+    return codes.filter((code) => {
 
       const matchesQuery = q
         ? code.name.toLowerCase().includes(q.toLowerCase()) ||
@@ -32,10 +33,13 @@ const Codes = () => {
 
       return matchesQuery && matchesCategories;
     });
-  }, [allCodes, q, categoryIds]);
+  }, [codes, q, categoryIds]);
 
   const renderContent = useCallback(() => {
-    if (allCodes.length === 0) {
+    if (isLoading) {
+      return <LoadingSpinner />;
+    }
+    else if (codes.length === 0) {
       return <EmptyList
         className="my-12"
         text="No code snippet with has been created yet!"
@@ -53,7 +57,7 @@ const Codes = () => {
     } else {
       return <CodeLister codes={filteredCodes} />
     }
-  }, [filteredCodes, allCodes.length])
+  }, [filteredCodes, codes.length, isLoading])
 
   return (
     <main className="mx-2">

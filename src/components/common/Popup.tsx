@@ -13,6 +13,7 @@ import { TCode } from "../../types/Code";
 import CodeEditForm from "../code/CodeEditForm";
 import { useModalStore } from "../../stores/modal.store";
 import { capitalizer } from "../../utils/capitalize";
+import LoadingSpinner from "./LoadingSpinner";
 
 
 const Popup = () => {
@@ -29,10 +30,9 @@ const Popup = () => {
   const setType = useModalStore(store => store.setType)
   const setText = useModalStore(store => store.setText)
 
-  const updateCategory = useCategoryStore((store) => store.updateCategory);
-  const updateCode = useCodeStore((store) => store.updateCode);
-  const removeCategory = useCategoryStore((store) => store.removeCategory);
-  const removeCode = useCodeStore((store) => store.removeCode);
+  const { updateCategory, removeCategory, isLoading: CatLoading } = useCategoryStore();
+  const { updateCode, removeCode, isLoading: CodeLoading } = useCodeStore();
+  const isLoading = CatLoading || CodeLoading;
 
   useEffect(() => {
     if (!editingvalues) return;
@@ -95,7 +95,12 @@ const Popup = () => {
 
   const editingText = `Editing ${type}`;
 
+
+
   const renderEditForm = () => {
+    if (isLoading) {
+      return <LoadingSpinner />;
+    }
     if (type === "code") {
       return <CodeEditForm editingvalues={editingvalues as TCode} isDeleting={isDeleting} resetPopup={resetPopup} handleDelete={handleDelete} executeEdit={executeEdit} />;
     } else {

@@ -6,13 +6,22 @@ import CodeSnippetViewer from "../components/codePage/CodeSnippetViewer";
 import CopyCodeButton from "../components/codePage/CopyCodeButton";
 import RelatedCodeSnippets from "../components/codePage/RelatedCodeSnippets";
 import EmptyList from "../components/common/EmptyList";
+import LoadingSpinner from "../components/common/LoadingSpinner";
 
 const CodePage = () => {
   const params = useParams();
   const codeId = params.id || "";
-  const codes = useCodeStore((store) => store.codes);
-  const categories = useCategoryStore((store) => store.categories);
+
+  const { categories, isLoading: CatLoading } = useCategoryStore();
+  const { codes, isLoading: CodeLoading } = useCodeStore();
+  const isLoading = CatLoading || CodeLoading;
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
+
   const codeResult = codes.find((c) => c._id === codeId);
+
   if (!codeResult) {
     return (
       <>

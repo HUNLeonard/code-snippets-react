@@ -16,7 +16,7 @@ interface FilterSectionProps {
 
 export const FilterSection = ({ searchParams, setSearchParams }: FilterSectionProps) => {
   const [isCatFilterOpen, setIsCatFilterOpen] = useState(false);
-  const categories = useCategoryStore((store) => store.categories);
+  const { categories, isLoading } = useCategoryStore();
   const q = searchParams.get("q") || "";
   const categoryIds = searchParams.get("categories")?.split(" ").filter(Boolean) || [];
   const [inputQuery, setInputQuery] = useState(q);
@@ -95,10 +95,10 @@ export const FilterSection = ({ searchParams, setSearchParams }: FilterSectionPr
             <ChevronDown size={24} />
           )}
         </Button>
-
         <CategorySelector
           options={categories}
           value={categoryIds}
+          isLoading={isLoading}
           wrapperClassName={cn(
             "absolute flex justify-center w-full",
             "bg-base-content p-2 rounded-b-md border-2 border-black border-t-0",

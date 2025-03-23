@@ -5,11 +5,13 @@ import { cn } from "../../utils/cn";
 import { LabelText } from "../common/LabelText";
 import { FormError } from "../common/FormError";
 import { LucideIcon } from "lucide-react";
+import LoadingSpinner from "../common/LoadingSpinner";
 
 interface CategorySelectorProps {
   options: TCategory[];
   onChange?: (selectedValue: TCategory["_id"][]) => void;
   value?: TCategory["_id"][];
+  isLoading?: boolean;
   error?: string;
   name?: string;
   label?: string;
@@ -24,6 +26,7 @@ const CategorySelector = ({
   options,
   onChange,
   value = [],
+  isLoading = false,
   error,
   name,
   label = "",
@@ -50,25 +53,31 @@ const CategorySelector = ({
           {Icon && <Icon size={20} className="text-primary" />}
           <LabelText text={label.length !== 0 ? label : name} />
         </div>
-        <div className={cn("flex flex-wrap gap-2", listClassName)}>
-          {options.map((o, idx) => (
-            <button
-              key={idx}
-              type="button"
-              onClick={() => toggleSelectedCategory(o._id)}
-              className={cn(
-                "px-4 py-1 rounded-4xl shadow-md",
-                "hover:-translate-y-0.5 transition-transform duration-150",
-                value.includes(o._id)
-                  ? "bg-accent text-accent-content font-medium ring-2 ring-primary-content"
-                  : "bg-primary text-primary-content ",
-                buttonClassName,
-              )}
-            >
-              {capitalizer(o.name)}
-            </button>
-          ))}
-        </div>
+        {
+          isLoading
+            ? <LoadingSpinner />
+            :
+
+            <div className={cn("flex flex-wrap gap-2", listClassName)}>
+              {options.map((o, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => toggleSelectedCategory(o._id)}
+                  className={cn(
+                    "px-4 py-1 rounded-4xl shadow-md",
+                    "hover:-translate-y-0.5 transition-transform duration-150",
+                    value.includes(o._id)
+                      ? "bg-accent text-accent-content font-medium ring-2 ring-primary-content"
+                      : "bg-primary text-primary-content ",
+                    buttonClassName,
+                  )}
+                >
+                  {capitalizer(o.name)}
+                </button>
+              ))}
+            </div>
+        }
       </label>
       <FormError error={error} />
     </div>

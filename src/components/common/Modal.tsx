@@ -20,7 +20,7 @@ const Modal = () => {
   }, [closeModal]);
 
   useEffect(() => {
-    let closeTimer: number;
+    let closeTimer: NodeJS.Timeout;
     if (isShowing && !isClosing) {
       closeTimer = setTimeout(() => {
         handleClose();

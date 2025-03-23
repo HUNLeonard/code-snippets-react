@@ -18,7 +18,7 @@ const NewCategory = () => {
   const openModal = useModalStore(store => store.openModal)
   const setType = useModalStore(store => store.setType)
   const setText = useModalStore(store => store.setText)
-  const addCategory = useCategoryStore((store) => store.addCategory);
+  const { addCategory, isLoading: CatLoading } = useCategoryStore();
 
   const executeAddCategory = (data: categorySchema) => {
     addCategory({
@@ -41,7 +41,7 @@ const NewCategory = () => {
           setLoading={setIsLoading}
           formClass="flex flex-col max-w-md mx-auto space-y-4"
         >
-          <Button disabled={isLoading} className="w-fit mx-auto !bg-accent" type="submit">
+          <Button disabled={isLoading || CatLoading} className="w-fit mx-auto !bg-accent" type="submit">
             Add New Category
           </Button>
         </CategoryForm>
