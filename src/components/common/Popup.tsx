@@ -16,6 +16,7 @@ import { capitalizer } from "../../utils/capitalize";
 import LoadingSpinner from "./LoadingSpinner";
 import { X } from "lucide-react";
 import { AxiosError } from "axios";
+import { useAuth } from "@clerk/clerk-react";
 
 
 const Popup = () => {
@@ -35,6 +36,7 @@ const Popup = () => {
 
   const { updateCategory, removeCategory, isLoading: CatLoading } = useCategoryStore();
   const { updateCode, removeCode, isLoading: CodeLoading } = useCodeStore();
+  const { userId, isLoaded } = useAuth();
   const isLoading = CatLoading || CodeLoading || isSubmitting;
 
   useEffect(() => {
@@ -45,6 +47,12 @@ const Popup = () => {
   }, [editingvalues, setIsDeleting, setIsClosing, setIsSubmitting]);
 
   if (!isopen || !editingvalues) return null;
+
+  if (!isLoaded) {
+    return <div className="absolute inset-0 mt-12">
+      <LoadingSpinner />
+    </div>;
+  }
 
   const type = "code" in editingvalues ? "code" : "category";
 
@@ -64,7 +72,7 @@ const Popup = () => {
             ownerId: editingvalues.ownerId,
             visibleToOthers: (data as TCode).visibleToOthers,
           },
-          ownerId: OWNERID
+          ownerId: userId || OWNERID
         });
       } else if (type === "category") {
         await updateCategory({
@@ -102,9 +110,9 @@ const Popup = () => {
     setIsSubmitting(true);
     try {
       if ("code" in editingvalues) {
-        await removeCode({ id: editingvalues._id, ownerId: OWNERID });
+        await removeCode({ id: editingvalues._id, ownerId: userId || OWNERID });
       } else {
-        await removeCategory({ id: editingvalues._id, ownerId: OWNERID });
+        await removeCategory({ id: editingvalues._id, ownerId: userId || OWNERID });
       }
 
 

@@ -3,17 +3,17 @@ import { CodeLister } from '../components/code/CodeLister'
 import EmptyList from '../components/common/EmptyList'
 import { H2 } from '../components/common/H2'
 import { useCodeStore } from '../stores/code.store'
-import { OWNERID } from '../shared/const'
 import LoadingSpinner from '../components/common/LoadingSpinner'
+import { useAuth } from '@clerk/clerk-react'
 
 const ManageCodes = () => {
   const { codes, isLoading } = useCodeStore()
-
+  const { userId } = useAuth();
   const renderContent = useCallback(() => {
     if (isLoading) {
       return <LoadingSpinner />;
     }
-    const ownersCodes = codes.filter(c => c.ownerId === OWNERID);
+    const ownersCodes = codes.filter(c => c.ownerId === userId);
     if (ownersCodes.length === 0) {
       return <EmptyList
         className="my-12"
@@ -25,7 +25,7 @@ const ManageCodes = () => {
     else {
       return <CodeLister codes={ownersCodes} manager={true} />
     }
-  }, [codes, isLoading])
+  }, [codes, isLoading, userId])
 
   return (
     <main className="mx-2">

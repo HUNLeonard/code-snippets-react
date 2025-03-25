@@ -6,9 +6,10 @@ import CodeForm from "../components/code/CodeForm";
 import FormContainer from "../components/common/FormContainer";
 import { PlusCircle } from "lucide-react";
 import { useModalStore } from "../stores/modal.store";
-import { OWNERID } from "../shared/const";
 import { codeSchema } from "../schemas/code";
 import { AxiosError } from "axios";
+import { useAuth } from "@clerk/clerk-react";
+import { useNavigate } from "react-router-dom";
 
 const defaultFormValues: codeSchema = {
   name: "",
@@ -24,6 +25,13 @@ const NewCode = () => {
   const setType = useModalStore(store => store.setType)
   const setText = useModalStore(store => store.setText)
   const { addCode, isLoading: CodeLoading } = useCodeStore();
+  const navigate = useNavigate()
+  const { userId } = useAuth();
+
+  if (!userId) {
+    navigate("/", { replace: true });
+    return null;
+  }
 
   const executeAddCode = async (data: codeSchema) => {
     setIsFormLoading(true);
@@ -33,7 +41,7 @@ const NewCode = () => {
         code: data.code,
         categories: data.categories,
         desc: data.desc,
-        ownerId: OWNERID,
+        ownerId: userId,
         visibleToOthers: data.visibleToOthers
       });
 

@@ -3,23 +3,29 @@ import { CategoryLister } from '../components/category/CategoryLister';
 import { H2 } from '../components/common/H2'
 import { useCategoryStore } from '../stores/category.store';
 import EmptyList from '../components/common/EmptyList';
-import { OWNERID } from '../shared/const';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@clerk/clerk-react';
 
 const ManageCategories = () => {
   const { categories, isLoading } = useCategoryStore();
+  const { userId } = useAuth();
   const navigate = useNavigate()
+
   useEffect(() => {
     navigate("/", { replace: true }); // TODO only admins can manager categories
   })
+  // if (!userId) {
+  //   navigate("/", { replace: true });
+  //   return null;
+  // }
   return null;
 
   const renderContent = useCallback(() => {
     if (isLoading) {
       return <LoadingSpinner />;
     }
-    const ownersCategories = categories.filter(c => c.ownerId === OWNERID);
+    const ownersCategories = categories.filter(c => c.ownerId === userId);
     if (ownersCategories.length === 0) {
       return <EmptyList
         className="my-12"
@@ -31,7 +37,7 @@ const ManageCategories = () => {
     else {
       return <CategoryLister categories={ownersCategories} manager={true} />
     }
-  }, [categories, isLoading])
+  }, [categories, isLoading, userId])
 
 
   return (

@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { cn } from "../../../utils/cn";
 import { NavButton } from "../../common/NavButton";
+import { SignedOut, SignedIn, UserButton, SignUpButton, SignInButton } from "@clerk/clerk-react";
 
 const navLinks = [
   {
@@ -16,15 +17,35 @@ export default function Header() {
       "items-center backdrop-blur transition-shadow duration-100",
       "shadow print:hidden")}>
       <div className="max-w-8xl mx-auto w-full flex justify-between items-center px-2">
-        <Link to={"/"} className="text-4xl font-bold w-fit">
+        <Link to={"/"} className="text-4xl font-bold w-fit ">
           <span className="text-primary">CS</span>M
         </Link>
-        <nav>
+        <nav className="flex gap-2">
           {
             navLinks.map(link =>
               <NavButton to={link.to} name={link.name} key={link.name} />
             )
           }
+          <SignedIn>
+            <UserButton showName appearance={{
+              elements: {
+                userButtonOuterIdentifier: '!text-base-content !text-lg max-md:!hidden',
+              },
+            }} />
+          </SignedIn>
+          <SignedOut>
+            <SignInButton>
+              <button className={cn("btn-nav")}>
+                Sign In
+              </button>
+            </SignInButton>
+            <SignUpButton>
+              <button className={cn("btn-nav")}>
+                Sign Up
+              </button>
+            </SignUpButton>
+          </SignedOut>
+
         </nav>
       </div>
     </header>

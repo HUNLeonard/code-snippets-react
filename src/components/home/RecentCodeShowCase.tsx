@@ -5,11 +5,11 @@ import RecentCodeLister from "./RecentCodeLister";
 import EmptyList from "../common/EmptyList";
 import { useCallback } from "react";
 import LoadingSpinner from "../common/LoadingSpinner";
-import { OWNERID } from "../../shared/const";
+import { useAuth } from "@clerk/clerk-react";
 
 const RecentCodeShowCase = () => {
   const { codes, isLoading } = useCodeStore();
-
+  const { userId } = useAuth();
 
   const renderContent = useCallback(() => {
     if (isLoading) {
@@ -25,7 +25,7 @@ const RecentCodeShowCase = () => {
       );
     } else {
       const availableCodes = codes.filter(c => {
-        if (!c.visibleToOthers && c.ownerId !== OWNERID) {
+        if (!c.visibleToOthers && c.ownerId !== userId) {
           return false;
         } return true;
       })
@@ -33,7 +33,7 @@ const RecentCodeShowCase = () => {
       const recentCodes = availableCodes.slice(0, 4);
       return <RecentCodeLister codes={recentCodes} />;
     }
-  }, [codes, isLoading]);
+  }, [codes, userId, isLoading]);
 
   return (
     <section

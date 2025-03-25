@@ -6,11 +6,12 @@ import { FilterSection } from "../components/code/FilterSection";
 import { useMemo, useCallback } from "react";
 import EmptyList from "../components/common/EmptyList";
 import LoadingSpinner from "../components/common/LoadingSpinner";
-import { OWNERID } from "../shared/const";
+import { useAuth } from "@clerk/clerk-react";
 
 const Codes = () => {
   const { codes, isLoading } = useCodeStore();
   const [searchParams, setSearchParams] = useSearchParams();
+  const { userId } = useAuth();
 
   const q = searchParams.get("q") || "";
   const categoryIds = useMemo(() => {
@@ -19,7 +20,7 @@ const Codes = () => {
 
   const filteredCodes = useMemo(() => {
     return codes.filter((code) => {
-      if (!code.visibleToOthers && code.ownerId !== OWNERID) {
+      if (!code.visibleToOthers && code.ownerId !== userId) {
         return false;
       }
       const matchesQuery = q
@@ -36,7 +37,7 @@ const Codes = () => {
 
       return matchesQuery && matchesCategories;
     });
-  }, [codes, q, categoryIds]);
+  }, [codes, q, categoryIds, userId]);
 
   const renderContent = useCallback(() => {
     if (isLoading) {

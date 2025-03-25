@@ -56,7 +56,7 @@ export const CodeCard = ({
       <pre
         className={cn(
           "grid bg-base-100 rounded-md px-4",
-          !showMore ? "grid-rows-[0fr]" : "grid-rows-[1fr] pt-4 pb-2",
+          !showMore ? "grid-rows-[0fr]" : "grid-rows-[1fr] py-4",
           " transition-[grid-template-rows,padding] duration-400 ease-in-out",
         )}
       >

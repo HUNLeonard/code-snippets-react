@@ -22,7 +22,7 @@ const navLinks = [
   // },
 ]
 
-export const AdminHeader = () => {
+export const UserHeader = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
