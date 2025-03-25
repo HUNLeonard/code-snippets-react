@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { cn } from "../../../utils/cn";
 import { NavButton } from "../../common/NavButton";
 import { SignedOut, SignedIn, UserButton, SignUpButton, SignInButton } from "@clerk/clerk-react";
+import { BASE_URL } from "../../../shared/const";
 
 const navLinks = [
   {
@@ -31,7 +32,9 @@ export default function Header() {
               elements: {
                 userButtonOuterIdentifier: '!text-base-content !text-lg max-md:!hidden',
               },
-            }} />
+            }}
+              afterSignOutUrl={BASE_URL}
+            />
           </SignedIn>
           <SignedOut>
             <SignInButton>
