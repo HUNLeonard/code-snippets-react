@@ -48,11 +48,14 @@ const CategorySelector = ({
 
   return (
     <div className={wrapperClassName}>
-      <label htmlFor={name} className={labelClassName}>
-        <div className="flex items-center gap-2 mb-1.5">
-          {Icon && <Icon size={20} className="text-primary" />}
-          <LabelText text={label.length !== 0 ? label : name} />
-        </div>
+      <div className={labelClassName}>
+        {
+          (label.length > 0 || (name && name.length > 0)) &&
+          <label htmlFor={name} className="flex items-center gap-2">
+            {Icon && <Icon size={20} className="text-primary mb-1.5" />}
+            <LabelText text={label.length !== 0 ? label : name} />
+          </label>
+        }
         {
           isLoading
             ? <LoadingSpinner />
@@ -78,7 +81,7 @@ const CategorySelector = ({
               ))}
             </div>
         }
-      </label>
+      </div>
       <FormError error={error} />
     </div>
   );

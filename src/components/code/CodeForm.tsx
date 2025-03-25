@@ -5,7 +5,8 @@ import { codeFormSchema, codeSchema } from "../../schemas/code";
 import CategorySelector from "../category/CategorySelector";
 import { useCategoryStore } from "../../stores/category.store";
 import { TCategory } from "../../types/Category";
-import { Code, FileText, Tag } from "lucide-react";
+import { Code, EyeOffIcon, FileText, Tag } from "lucide-react";
+import { ToggleInput } from "../common/ToggleInput";
 
 interface CodeFormProps {
   defaultFormValues: codeSchema;
@@ -42,9 +43,13 @@ const CodeForm = ({
     setField("categories", selectedCategories);
   };
 
+  const handleVisibilitySelector = (selectedVisibility: boolean) => {
+    setField("visibleToOthers", selectedVisibility);
+  };
+
   useEffect(() => {
-    setLoading(isLoading);
-  });
+    setLoading(isLoading || CatLoading);
+  }, [setLoading, isLoading, CatLoading]);
 
   return (
     <form onSubmit={handleSubmit} className={formClass} style={formStyle}>
@@ -84,6 +89,14 @@ const CodeForm = ({
         error={formError.categories}
         name="categories"
         icon={Tag}
+      />
+      <ToggleInput
+        value={formData.visibleToOthers}
+        onChange={handleVisibilitySelector}
+        error={formError.visibleToOthers}
+        name="visibleToOthers"
+        label="Visible to everybody"
+        icon={EyeOffIcon}
       />
       {children}
     </form>

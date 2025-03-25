@@ -38,13 +38,18 @@ export const Input = ({
 }: InputProps) => {
   const InputType = input || "input";
 
+  const LabelTag = (label.length > 0 || (name && name.length > 0)) ? "label" : "div"
+
   return (
     <div className={wrapperClassName}>
-      <label htmlFor={name} className={cn("flex flex-col", labelClassName)}>
-        <div className="flex items-center justi gap-2">
-          {Icon && <Icon size={20} className="text-primary mb-1.5" />}
-          <LabelText text={label.length !== 0 ? label : name} />
-        </div>
+      <div className={cn("flex flex-col", labelClassName)}>
+        {
+          (label.length > 0 || (name && name.length > 0)) &&
+          <LabelTag htmlFor={name} className="flex items-center gap-2">
+            {Icon && <Icon size={20} className="text-primary mb-1.5" />}
+            <LabelText text={label.length !== 0 ? label : name} />
+          </LabelTag>
+        }
         <InputType
           type={type}
           name={name}
@@ -58,7 +63,7 @@ export const Input = ({
             input === "textarea" && "min-h-36 "
           )}
         />
-      </label>
+      </div>
       <FormError error={error} />
     </div>
   );

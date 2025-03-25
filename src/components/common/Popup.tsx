@@ -61,7 +61,8 @@ const Popup = () => {
             code: (data as TCode).code,
             desc: (data as TCode).desc,
             categories: (data as TCode).categories,
-            ownerId: editingvalues.ownerId
+            ownerId: editingvalues.ownerId,
+            visibleToOthers: (data as TCode).visibleToOthers,
           },
           ownerId: OWNERID
         });

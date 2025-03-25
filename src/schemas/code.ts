@@ -8,6 +8,7 @@ export const codeFormSchema = z.object({
     .string()
     .array()
     .min(1, "Code must contain at least 1 category!"),
+  visibleToOthers: z.boolean(),
 });
 
 export type codeSchema = z.infer<typeof codeFormSchema>;

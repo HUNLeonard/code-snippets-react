@@ -1,13 +1,19 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { CategoryLister } from '../components/category/CategoryLister';
 import { H2 } from '../components/common/H2'
 import { useCategoryStore } from '../stores/category.store';
 import EmptyList from '../components/common/EmptyList';
 import { OWNERID } from '../shared/const';
 import LoadingSpinner from '../components/common/LoadingSpinner';
+import { useNavigate } from 'react-router-dom';
 
 const ManageCategories = () => {
   const { categories, isLoading } = useCategoryStore();
+  const navigate = useNavigate()
+  useEffect(() => {
+    navigate("/", { replace: true }); // TODO only admins can manager categories
+  })
+  return null;
 
   const renderContent = useCallback(() => {
     if (isLoading) {

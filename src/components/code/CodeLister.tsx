@@ -10,7 +10,6 @@ export const CodeLister = ({
   manager?: boolean;
 }) => {
   return (
-    // Some reason this had greader z.index then the categoryFilter
     <section className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 gap-4">
       {codes.map((code, index) => (
         <CodeCard

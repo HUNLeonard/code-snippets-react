@@ -19,7 +19,7 @@ const RecentCodeCard = ({ code }: { code: TCode }) => {
       <H3
         title={code.name}
         className={cn(
-          "text-center line-clamp-2",
+          "text-center line-clamp-2 [word-break:break-word]",
           "hover:scale-105 w-fit mx-auto",
           "hover:text-primary transition-[color,scale] duration-200",
         )}

@@ -5,6 +5,7 @@ import RecentCodeLister from "./RecentCodeLister";
 import EmptyList from "../common/EmptyList";
 import { useCallback } from "react";
 import LoadingSpinner from "../common/LoadingSpinner";
+import { OWNERID } from "../../shared/const";
 
 const RecentCodeShowCase = () => {
   const { codes, isLoading } = useCodeStore();
@@ -23,7 +24,13 @@ const RecentCodeShowCase = () => {
         />
       );
     } else {
-      const recentCodes = codes.slice(0, 4);
+      const availableCodes = codes.filter(c => {
+        if (!c.visibleToOthers && c.ownerId !== OWNERID) {
+          return false;
+        } return true;
+      })
+
+      const recentCodes = availableCodes.slice(0, 4);
       return <RecentCodeLister codes={recentCodes} />;
     }
   }, [codes, isLoading]);

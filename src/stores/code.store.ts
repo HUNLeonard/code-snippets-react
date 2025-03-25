@@ -25,6 +25,7 @@ export const useCodeStore = () => {
       desc: string;
       categories: string[];
       ownerId: string;
+      visibleToOthers: boolean;
     }) => {
       return createCode({
         name: newCodeData.newName,
@@ -32,6 +33,7 @@ export const useCodeStore = () => {
         desc: newCodeData.desc || "",
         categories: newCodeData.categories,
         ownerId: newCodeData.ownerId,
+        visibleToOthers: newCodeData.visibleToOthers,
       });
     },
     onSuccess: () => {
@@ -65,6 +67,7 @@ export const useCodeStore = () => {
       desc: string;
       categories: string[];
       ownerId: string;
+      visibleToOthers: boolean;
     }) => {
       return addCodeMutation.mutateAsync(data);
     },

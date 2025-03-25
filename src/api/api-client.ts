@@ -70,6 +70,7 @@ export const updateCode = async (
     desc: code.desc,
     categories: code.categories,
     ownerId,
+    visibleToOthers: code.visibleToOthers,
   });
   return response.data;
 };

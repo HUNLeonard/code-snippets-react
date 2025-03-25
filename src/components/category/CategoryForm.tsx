@@ -21,7 +21,7 @@ const CategoryForm = ({
   formClass,
   formStyle,
 }: CategoryFormProps) => {
-  const { formData, formError, isLoading, handleChange, handleSubmit } =
+  const { formData, formError, isLoading: isFormLoading, handleChange, handleSubmit } =
     useForm({
       defaultFormValues,
       execute,
@@ -29,8 +29,8 @@ const CategoryForm = ({
     });
 
   useEffect(() => {
-    setLoading(isLoading);
-  });
+    setLoading(isFormLoading);
+  }, [setLoading, isFormLoading]);
 
   return (
     <form onSubmit={handleSubmit} className={formClass} style={formStyle}>

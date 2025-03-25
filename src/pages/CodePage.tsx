@@ -7,6 +7,7 @@ import CopyCodeButton from "../components/codePage/CopyCodeButton";
 import RelatedCodeSnippets from "../components/codePage/RelatedCodeSnippets";
 import EmptyList from "../components/common/EmptyList";
 import LoadingSpinner from "../components/common/LoadingSpinner";
+import { OWNERID } from "../shared/const";
 
 const CodePage = () => {
   const params = useParams();
@@ -40,10 +41,15 @@ const CodePage = () => {
   }
 
   const relatedCodes = codes
-    .filter((c) =>
-      c.categories.some(
+    .filter((c) => {
+      if (!c.visibleToOthers && c.ownerId !== OWNERID) {
+        return false;
+      }
+
+      return c.categories.some(
         (cat) => c._id !== codeResult._id && codeResult.categories.includes(cat),
-      ),
+      )
+    }
     )
     .slice(0, 2);
 

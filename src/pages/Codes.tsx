@@ -6,6 +6,7 @@ import { FilterSection } from "../components/code/FilterSection";
 import { useMemo, useCallback } from "react";
 import EmptyList from "../components/common/EmptyList";
 import LoadingSpinner from "../components/common/LoadingSpinner";
+import { OWNERID } from "../shared/const";
 
 const Codes = () => {
   const { codes, isLoading } = useCodeStore();
@@ -18,7 +19,9 @@ const Codes = () => {
 
   const filteredCodes = useMemo(() => {
     return codes.filter((code) => {
-
+      if (!code.visibleToOthers && code.ownerId !== OWNERID) {
+        return false;
+      }
       const matchesQuery = q
         ? code.name.toLowerCase().includes(q.toLowerCase()) ||
         code.desc.toLowerCase().includes(q.toLowerCase()) ||

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CategoryForm from "../components/category/CategoryForm";
 import { Button } from "../components/common/Button";
 import { H2 } from "../components/common/H2";
@@ -8,6 +8,7 @@ import { useModalStore } from "../stores/modal.store";
 import { OWNERID } from "../shared/const";
 import { categorySchema } from "../schemas/category";
 import { AxiosError } from "axios";
+import { useNavigate } from "react-router-dom";
 
 const defaultFormValues: categorySchema = {
   name: "",
@@ -16,10 +17,17 @@ const defaultFormValues: categorySchema = {
 
 const NewCategory = () => {
   const [isFormLoading, setIsFormLoading] = useState(false);
+  const navigate = useNavigate()
   const openModal = useModalStore(store => store.openModal)
   const setType = useModalStore(store => store.setType)
   const setText = useModalStore(store => store.setText)
   const { addCategory, isLoading: CatLoading } = useCategoryStore();
+
+  useEffect(() => {
+    navigate("/", { replace: true }); // TODO only admins can add categories
+  })
+  return null;
+
 
   const executeAddCategory = async (data: categorySchema) => {
     setIsFormLoading(true);

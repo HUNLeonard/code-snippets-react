@@ -44,7 +44,7 @@ const CategoryCard = ({ category, manager = false, style = {}, className }: Cate
       </H3>
       {manager && (
         <button className={cn("absolute top-3 sm:top-5 right-3 sm:right-5 w-fit",
-          "hover:scale-120 transition-transform duration-200 ease-in-out",
+          "hover:scale-120 transition-transform duration-200 ease-in-out bg-base-300",
         )}
           onClick={handleEdit}>
           <Edit size={32} />

@@ -6,5 +6,6 @@ export type TCode = {
   code: string;
   desc: string;
   categories: TCategory["_id"][];
+  visibleToOthers: boolean;
   ownerId: string;
 };

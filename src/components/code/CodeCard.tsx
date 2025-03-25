@@ -36,10 +36,11 @@ export const CodeCard = ({
   return (
     <Card Tag="article" style={style} className={className}>
       <H3
-        className={cn("text-center",
+        className={cn("text-center [word-break:break-word]",
           !showMore && "line-clamp-2",
           "hover:scale-105 w-fit mx-auto",
-          "hover:text-primary transition-[color,scale] duration-200"
+          "hover:text-primary transition-[color,scale] duration-200",
+          manager && "pr-8"
         )}
 
         title={code.name}
@@ -87,7 +88,7 @@ export const CodeCard = ({
           View Code
         </Link>
         <button
-          className={cn("w-fit font-medium", showMore ? "text-accent" : "text-primary")}
+          className={cn("w-fit font-medium whitespace-nowrap", showMore ? "text-accent" : "text-primary")}
           onClick={() => setShowMore((p) => !p)}
         >
           {showMore ? "Show less" : "Show more"}
@@ -96,7 +97,7 @@ export const CodeCard = ({
       {manager && (
         <button
           className={cn("absolute top-3 sm:top-5 right-3 sm:right-5 w-fit",
-            "hover:scale-120 transition-transform duration-200 ease-in-out",
+            "hover:scale-120 transition-transform duration-200 ease-in-out bg-base-300",
           )}
           onClick={handleEdit}
         >

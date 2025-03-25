@@ -15,6 +15,7 @@ const defaultFormValues: codeSchema = {
   code: "",
   desc: "",
   categories: [],
+  visibleToOthers: true
 };
 
 const NewCode = () => {
@@ -32,7 +33,8 @@ const NewCode = () => {
         code: data.code,
         categories: data.categories,
         desc: data.desc,
-        ownerId: OWNERID
+        ownerId: OWNERID,
+        visibleToOthers: data.visibleToOthers
       });
 
       openModal();

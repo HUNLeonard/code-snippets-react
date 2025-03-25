@@ -12,14 +12,14 @@ const navLinks = [
     name: "codeManager",
     to: "/codes/manager"
   },
-  {
-    name: "newCategory",
-    to: "/category/new"
-  },
-  {
-    name: "categoryManager",
-    to: "/category/manager"
-  },
+  // {
+  //   name: "newCategory",
+  //   to: "/category/new"
+  // },
+  // {
+  //   name: "categoryManager",
+  //   to: "/category/manager"
+  // },
 ]
 
 export const AdminHeader = () => {
