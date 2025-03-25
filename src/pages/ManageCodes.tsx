@@ -17,7 +17,7 @@ const ManageCodes = () => {
     if (ownersCodes.length === 0) {
       return <EmptyList
         className="my-12"
-        text="No code snippet with has been created yet!"
+        text="You didn't create a code snippet yet!"
         buttonText='Create Code'
         to="/codes/new"
       />

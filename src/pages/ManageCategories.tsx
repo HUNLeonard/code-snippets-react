@@ -17,7 +17,7 @@ const ManageCategories = () => {
     if (ownersCategories.length === 0) {
       return <EmptyList
         className="my-12"
-        text="No category has been created yet!"
+        text="You didn't create a category yet!"
         buttonText='Create Category'
         to='/category/new'
       />
