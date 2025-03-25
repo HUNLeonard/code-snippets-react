@@ -14,7 +14,7 @@ const CodeSnippetViewer = ({ codeResult }: CodeSnippetViewerProps) => {
       <div className="flex items-center justify-between p-3 bg-gray-700">
         <div className="flex items-center gap-2">
           <CodeIcon size={18} className="text-blue-400" />
-          <span className="font-mono text-sm">{codeResult.name}.ts</span>
+          <span className="font-mono text-sm">{codeResult.name}</span>
         </div>
         <div className="flex gap-2">
           <button
@@ -27,7 +27,7 @@ const CodeSnippetViewer = ({ codeResult }: CodeSnippetViewerProps) => {
       </div>
 
       <pre
-        className={`p-4 overflow-x-auto ${expanded ? "max-h-[500px]" : "max-h-[300px]"
+        className={`p-4 overflow-x-auto ${expanded ? "max-h-[600px]" : "max-h-[300px]"
           } transition-all duration-300 ease-in-out`}
       >
         <code className="text-white font-mono text-sm">
