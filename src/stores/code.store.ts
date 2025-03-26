@@ -7,14 +7,16 @@ import {
   deleteCode,
 } from "../api/api-client";
 import { CODES_QUERY_KEY } from "../shared/const";
+import { useAuth } from "@clerk/clerk-react";
 
 export const useCodeStore = () => {
   const queryClient = useQueryClient();
+  const { userId } = useAuth();
 
   // fetch
   const { data: codes = [], isLoading: isFetching } = useQuery({
-    queryKey: [CODES_QUERY_KEY],
-    queryFn: fetchCodes,
+    queryKey: [CODES_QUERY_KEY, userId],
+    queryFn: () => fetchCodes(userId || ""),
   });
 
   // add

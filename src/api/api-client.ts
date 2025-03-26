@@ -45,13 +45,19 @@ export const deleteCategory = async (
 };
 
 // Code API
-export const fetchCodes = async (): Promise<TCode[]> => {
-  const response = await apiClient.get("/api/codes");
+export const fetchCodes = async (userId?: string): Promise<TCode[]> => {
+  // const headers = userId ? { "x-user-id": userId } : {};
+  const response = await apiClient.get("/api/codes", {
+    headers: { "x-user-id": userId },
+  });
   return response.data;
 };
-
-export const fetchCode = async (codeId: TCode["_id"]): Promise<TCode[]> => {
-  const response = await apiClient.get(`/api/codes/${codeId}`);
+export const fetchCode = async (
+  codeId: TCode["_id"],
+  userId?: string,
+): Promise<TCode[]> => {
+  const headers = userId ? { "x-user-id": userId } : {};
+  const response = await apiClient.get(`/api/codes/${codeId}`, { headers });
   return response.data;
 };
 

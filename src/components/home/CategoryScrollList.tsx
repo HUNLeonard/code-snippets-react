@@ -38,7 +38,7 @@ export const CategoryScrollList = ({
             <ScrollButton
               icon={ChevronLeft}
               execute={() => scrollHorizintal("left")}
-              className="left-0 top-1/2 -translate-y-1/2 max-sm:bg-primary/20"
+              className="left-0 top-1/2 -translate-y-1/2 max-md:bg-primary/20"
               containerRef={categoryContainer}
             />
             <div
@@ -59,7 +59,7 @@ export const CategoryScrollList = ({
             <ScrollButton
               icon={ChevronRight}
               execute={() => scrollHorizintal("right")}
-              className="right-0 top-1/2 -translate-y-1/2 max-sm:bg-primary/20"
+              className="right-0 top-1/2 -translate-y-1/2 max-md:bg-primary/20"
               containerRef={categoryContainer}
             />
             <div className="max-md:hidden absolute right-0 inset-y-0 w-14 bg-gradient-to-r from-transparent to-20% to-base-300 z-10" />
